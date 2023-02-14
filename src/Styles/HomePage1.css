@@ -1,0 +1,178 @@
+@font-face {
+  font-family: 'FranklinAve';
+  src: url('../Styles/FranklinAve.ttf') format('truetype');
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 91.7vh;
+}
+.container1 {
+  background-image: url(../Multimedia/background1.png);
+  background-size: cover;
+  background-repeat: repeat;
+}
+
+.video {
+  max-height: 200vh;
+  height: 80vh; /* set a maximum height to match the parent container */
+  max-width: auto; /* set a maximum width to match the parent container */
+  object-fit: contain;
+  position: absolute;
+  left: 38%;
+  top: 15%;
+  border-radius: 15px;
+  box-shadow: -10px 5px 20px rgba(0, 0, 0, 0.5);
+
+  /* scale the video proportionally to fit within the parent container */
+}
+
+.like {
+  width: 10vh;
+
+  display: flex;
+
+
+  /* move the container to the middle of the screen */
+  /* adjust the position so that the container is centered */
+}
+
+.like-count {
+  display: flex;
+  /* move the container to the middle of the screen */
+   /* adjust the position so that the container is centered */
+  
+  color: black;
+  font-size: xxx-large;
+  margin-left: 10px;
+}
+.like-wrapper {
+  display: flex;
+ 
+  align-items: center;
+  position: absolute;
+  top: 25%;
+
+  right: 21%;
+  
+ 
+  
+}
+
+.arrow-container {
+  display: flex;
+  justify-content: space-between; /* distribute the arrows evenly within the container */
+  position: absolute;
+  top: 50%; /* move the container to the middle of the screen */
+  transform: translateY(
+    -50%
+  ); /* adjust the position so that the container is centered */
+  width: 100%;
+}
+
+.arrow {
+  max-width: 10vh;
+
+  display: flex;
+  justify-content: space-between; /* distribute the arrows evenly within the container */
+  position: absolute;
+  top: 50%; /* move the container to the middle of the screen */
+  transform: translateY(
+    -50%
+  ); /* adjust the position so that the container is centered */
+  
+}
+
+.arrow-left {
+  position: absolute;
+
+  left: 10px;
+}
+
+.arrow-right {
+  position: absolute;
+  right: 10px;
+}
+
+.comment-container {
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+.title {
+  position: absolute;
+  left: 23%; /* position the title at the 3/10 part of the screen */
+  top: 25%; /* center the title vertically */
+  transform: translate(-50%, -50%);
+  
+  width: 24%; /* adjust the position so that the title is centered */
+  font-size: 4vw;
+  font-family: 'FranklinAve', sans-serif;
+  color: rgb(0, 0, 0);
+}
+
+.titleReto {
+
+  
+  font-family: 'FranklinAve', sans-serif;
+  
+}
+.titleRetoRed {
+
+  color:#EA3C53;
+  font-family: 'FranklinAve', sans-serif;
+  
+}
+
+.logob {
+  position: absolute;
+  
+  left: 10%; /* position the title at the 3/10 part of the screen */
+  bottom: 0%;
+  height: 40vh; /* set the height to half of the viewport */
+  overflow-y: scroll;
+  /* enable scrolling for the comment section */
+  
+  justify-content: space-between;
+}
+
+.comment-section {
+  position: absolute;
+  padding: 20px;
+  border-radius: 20px;
+  right: 7%; /* position the title at the 3/10 part of the screen */
+  top: 40%;
+  height: 50vh; /* set the height to half of the viewport */
+  overflow-y: scroll;
+  width: 28%; /* enable scrolling for the comment section */
+  background-color: rgb(238, 237, 237);
+  justify-content: space-between;
+}
+.comment {
+  background-color: white;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  border-radius: 10px;
+  color: black;
+}
+.comment-header {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+@media (max-width: 767px) {
+  .video {
+    max-height: 50vw; /* set a maximum height to match the parent container */
+    max-width: auto; /* set a maximum width to match the parent container */
+    object-fit: contain;
+    position: absolute;
+    left: 50%;
+    top: 20%;
+    /* scale the video proportionally to fit within the parent container */
+  }
+
+  .arrow {
+    max-width: 5vh;
+  }
+}

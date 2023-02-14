@@ -1,0 +1,23 @@
+.challenge-container {
+    width: 80%; /* define el ancho del recuadro */
+    margin: 0 auto; /* centra el recuadro */
+    padding: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* agrega sombra al recuadro */
+  }
+  
+  .form-group {
+    margin-bottom: 20px; /* separa los elementos del formulario */
+  }
+  
+  label {
+    font-weight: bold; /* hace el texto del label mas grueso */
+  }
+  
+  .form-control {
+    border-radius: 5px; /* redondea los bordes de los elementos de formulario */
+  }
+  
+  button {
+    margin-top: 20px; /* separa el boton del formulario */
+  }
+  

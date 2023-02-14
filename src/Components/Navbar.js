@@ -1,0 +1,84 @@
+import { logDOM } from "@testing-library/react";
+import { useRef, useState } from "react";
+import { FaBars, FaTimes } from "react-icons/fa";
+import "../Styles/main.css";
+import logo from "../Multimedia/logo.png"
+import Popuplogin from "./Popuplogin";
+import PopupRegister from "./PopupRegister";
+import PopupDesafia from "./PopupDesafia";
+
+
+function Navbar({ toggleLogin, toggleRegister, toggleHome, toggleDare, toggleChallenge}) {
+  const navRef = useRef();
+  const showNavbar = () => {
+    navRef.current.classList.toggle("responsive_nav");
+  };
+  
+  const [LoginOpen, setLoginOpen] = useState(false);
+  const [RegisterOpen, setRegisterOpen] = useState(false);
+  const [DesafiaOpen, setDesafiaOpen] = useState(false);
+
+  const OpenLogin = () => {
+    setLoginOpen(true);
+  };
+
+  const CloseLogin = () => {
+    setLoginOpen(false);
+  };
+  const OpenRegister = () => {
+    setRegisterOpen(true);
+    console.log(RegisterOpen)
+  };
+
+  const CloseRegister = () => {
+    setRegisterOpen(false);
+  };
+  const OpenDesafia = () => {
+    setDesafiaOpen(true);
+  };
+
+  const CloseDesafia = () => {
+    setDesafiaOpen(false);
+  };
+
+  return (
+    
+    <header
+    
+     >
+      <nav ref={navRef}>
+        <a href="/#" onClick={toggleDare} >Atrévete</a>
+
+        <a href="/#" onClick={OpenDesafia} className="red-text">
+          Desafía
+        </a>
+        <PopupDesafia isOpend={false} closeModad={CloseDesafia}/>
+      </nav>
+      <nav ref={navRef}>
+      <button className=" bg-transparent " onClick={toggleHome}>
+      <img className="h-20 w-20 bg-transparent border-none outline-none"  src={logo} alt={"logo"} />
+    </button>
+      
+      </nav>
+      <nav ref={navRef}>
+        <a href="/#" onClick={OpenLogin}>
+          Iniciar Sesión
+        </a>
+        <Popuplogin toggleRegister={toggleRegister} isOpen={LoginOpen} closeModal={CloseLogin}/>
+        <a href="/#" className="red-box" onClick={OpenRegister}>
+          Registrarse
+        </a>
+        <PopupRegister  isOpenr={RegisterOpen} closeModalr={CloseRegister}/>
+      </nav>
+      <button className="nav-btn nav-close-btn" onClick={showNavbar}>
+        <FaTimes />
+      </button>
+
+      <button className="nav-btn" onClick={showNavbar}>
+        <FaBars />
+      </button>
+    </header>
+  );
+}
+
+export default Navbar;
