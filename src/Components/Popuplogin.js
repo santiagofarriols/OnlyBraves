@@ -3,17 +3,28 @@ import Modal from "react-modal";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "../Styles/login-form.css";
-import LoginImage from "../Multimedia/Loginimage4.png";
+import logob from "../Multimedia/LogoBlack.png";   
 
 const customStyles = {
-  content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
+  content: {
+    width:"30vw",
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    borderRadius: "15px",
+    boxShadow: "2px 2px 10px rgba(0, 0, 0, 0.3)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+
+ 
+    
+    
   }
+  
 };
 
 function Popuplogin({ toggleRegister, isOpen, closeModal}) {
@@ -51,22 +62,37 @@ function Popuplogin({ toggleRegister, isOpen, closeModal}) {
         isOpen={isOpen}
         onRequestClose={closeModal}
         style={customStyles}
+        overlayClassName="fixed inset-0 bg-gray-700 bg-opacity-70"
       >
-        <div className="register-container">
-          <h1 className="titulo">Bienvenido de nuevo </h1>
-          <form onSubmit={handleSubmit} className="login-form">
-            <label>
+        <div className="register-container text-center ">
+        
+        <div className="flex w-full justify-between ">
+        <div></div>
+        <img className="h-20 w-20 bg-transparent border-none outline-none center"  src={logob} alt={"logo"} />
+        <button className="w-6 h-6 text-gray-700 hover:text-black" onClick={closeModal}>
+        ✕
+          </button>
+          </div>
+        <h1 className="titulo">Bienvenido de nuevo </h1>
+          
+        
+          
+          <form onSubmit={handleSubmit} >
+            <label className="block text-gray-700 font-bold mb-2 w-full" htmlFor="email">
               Email:
               <input
+               className="w-full border border-gray-400 p-2 mb-4"
+               placeholder="Titulo del reto" 
                 type="text"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </label>
             <br />
-            <label>
+            <label className="block text-gray-700 font-bold mb-2 w-full"  htmlFor="password">
               Contraseña:
               <input
+               className="w-full border border-gray-400 p-2 mb-4"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -80,7 +106,7 @@ function Popuplogin({ toggleRegister, isOpen, closeModal}) {
     }
     handleSubmit();
     
-  }} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded " type="submit" disabled={isLoading}>
+  }} className=" bg-yellow-400 hover:bg-yellow-700 text-Black font-bold py-2 px-4 rounded" type="submit" disabled={isLoading}>
           Iniciar sesión
         </button>
         

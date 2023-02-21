@@ -1,20 +1,30 @@
 import React, { useState } from 'react';
-import BackgroundImage from '../Multimedia/background1.png';
-import YourImage from '../Multimedia/registerimage.png';
 import Modal from "react-modal";
+import logob from "../Multimedia/LogoBlack.png";   
+const customStyles = {
+  content: {
+    width:"30vw",
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    borderRadius: "15px",
+    boxShadow: "2px 2px 10px rgba(0, 0, 0, 0.3)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
 
-
-const customStylesr = {
-  content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
+ 
+    
+    
   }
+  
 };
-function PopupRegister( isOpenr, closeModalr) {
+
+function PopupRegister({isOpen, closeModal}) {
+
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,19 +39,32 @@ function PopupRegister( isOpenr, closeModalr) {
     // Aquí podrías colocar tu lógica para iniciar sesión, como hacer una petición a tu API
     // y manejar el resultado de la petición.
     setIsLoading(false);
-    closeModalr();
+    closeModal();
   }
 
   return (
-    <Modal
-    isOpen={!isOpenr}
-    onRequestClose={closeModalr}
-    style={customStylesr}
-  >
-    <div className="bg-white max-w-sm mx-8 h-3/6 rounded shadow-lg p-8">
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label className="block font-bold mb-2 text-gray-700" htmlFor="username">
+    
+      
+      <Modal
+        isOpen={isOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+        overlayClassName="fixed inset-0 bg-gray-700 bg-opacity-70"
+      >
+        <div className="register-container text-center  ">
+        
+        <div className="flex w-full justify-between  ">
+        <div></div>
+        <img className="h-20 w-20 bg-transparent border-none outline-none center"  src={logob} alt={"logo"} />
+        <button className="w-6 h-6 text-gray-700 hover:text-black" onClick={closeModal}>
+        ✕
+          </button>
+          </div>
+        <h1 className="titulo">Bienvenido de nuevo </h1>
+       
+      <form className="w-3/4 "onSubmit={handleSubmit}>
+        <div className="mb-4 w-full">
+          <label className="block font-bold mb-2 text-gray-700 w-full" htmlFor="username">
             Nombre de usuario:
           </label>
           <input 
@@ -52,8 +75,8 @@ function PopupRegister( isOpenr, closeModalr) {
             id="username" 
           />
         </div>
-        <div className="mb-4">
-          <label className="block font-bold mb-2 text-gray-700" htmlFor="email">
+        <div className="mb-4 w-full">
+          <label className="block font-bold mb-2 text-gray-700 w-full" htmlFor="email">
             Email:
           </label>
           <input 
@@ -64,8 +87,8 @@ function PopupRegister( isOpenr, closeModalr) {
             id="email" 
           />
         </div>
-        <div className="mb-4">
-          <label className="block font-bold mb-2 text-gray-700" htmlFor="password">
+        <div className="mb-4 w-full">
+          <label className="block font-bold mb-2 text-gray-700 w-full" htmlFor="password">
             Contraseña:
           </label>
           <input 
@@ -76,8 +99,8 @@ function PopupRegister( isOpenr, closeModalr) {
             id="password" 
           />
         </div>
-        <div className="mb-4">
-          <label className="block font-bold mb-2 text-gray-700" htmlFor="password2">
+        <div className="mb-4 w-full">
+          <label className="block font-bold mb-2 text-gray-700 w-full" htmlFor="password2">
             Repite tu Contraseña:
           </label>
           <input 
@@ -92,7 +115,7 @@ function PopupRegister( isOpenr, closeModalr) {
           <p className="text-red-500 text-xs italic mb-4">{error}</p>
         )}
         <button 
-          className=" bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded" 
+          className=" bg-yellow-400 hover:bg-yellow-700 text-Black font-bold py-2 px-4 rounded" 
           type="submit" 
           disabled={isLoading}
         >
@@ -102,9 +125,13 @@ function PopupRegister( isOpenr, closeModalr) {
       
     </div>
  
-
-    </Modal>
-  );  
+      </Modal>
+     
+    
+    
+  );
 }
-
 export default PopupRegister;
+
+
+

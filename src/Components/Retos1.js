@@ -5,7 +5,7 @@ import '../Styles/Estilos/Retos1.css'
 
 class Retos1 extends Component {
     handleClick = () => {
-        this.props.submitVideo("video");
+        this.props.OpenNewVideo();
       }
     render() {
         return (
@@ -19,6 +19,7 @@ class Retos1 extends Component {
                 <div className="descripcion">{this.props.description}</div>
                 <div className="Realizar">
                 <button className="btn btn-primary" onClick={this.handleClick}  type="submit">Realizar Reto</button>
+                
                 </div>
                
 

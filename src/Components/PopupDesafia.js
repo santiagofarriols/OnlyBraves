@@ -4,19 +4,32 @@ import db from "../firebase_setup/firebase"
 import newReto1 from "../Multimedia/registerimage.png"
 import bg1 from "../Multimedia/background1.png"
 import Modal from "react-modal";
+import logob from "../Multimedia/LogoBlack.png";   
 
+const customStyles = {
+  content: {
+    width:"30vw",
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    borderRadius: "15px",
+    boxShadow: "2px 2px 10px rgba(0, 0, 0, 0.3)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
 
-const customStylesd = {
-  content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
+ 
+    
+    
   }
+  
 };
-function PopupDesafia(isOpend, closeModald) {
+
+
+function PopupDesafia({isOpen, closeModal}) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setNumber] = useState("");
@@ -59,49 +72,70 @@ function PopupDesafia(isOpend, closeModald) {
   }, []);
 
 
+
   return (
-    <Modal
-    isOpen={!isOpend}
-    onRequestClose={closeModald}
-    style={customStylesd}
-  >
-      <div className="p-20 bg-white rounded-lg shadow-md m-8 border-2 border-purple-500 flex" >
-        <div className="w-2/3 pr-8">
-          <h3 className="text-5xl font-medium text-center text-indigo-500 mb-4">Nuevo Reto</h3>
-          <form className="form-group" onSubmit={handleSubmit}>
-            <input 
-              maxLength={50} 
-              className="form-input mt-2 rounded-lg bg-gray-200 focus:outline-none focus:shadow-outline border border-gray-300 py-2 px-4 block w-full appearance-none" 
-              type="text" 
-              placeholder="Titulo" 
-              value={title} 
-              onChange={(e) => setTitle(e.target.value)} />
+    
+      
+      <Modal
+        isOpen={isOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+        overlayClassName="fixed inset-0 bg-gray-700 bg-opacity-70"
+      >
+         <div className="register-container text-center ">
+        
+        <div className="flex w-full justify-between">
+        <div></div>
+        <img className="h-20 w-20 bg-transparent border-none outline-none center"  src={logob} alt={"logo"} />
+        <button className="w-6 h-6 text-gray-700 hover:text-black" onClick={closeModal}>
+        ✕
+          </button>
+          </div>
+        <h1 className="titulo">Nuevo reto</h1>
+          
+       
+          
+          <form className="form-group " onSubmit={handleSubmit}>
+          <input 
+  maxLength={50} 
+  className="form-input mt-2 rounded-lg bg-white focus:outline-none focus:shadow-outline border-2 border-gray-400 py-2 px-4 block w-full appearance-none p-2 mb-4"
+  type="text" 
+  placeholder="Titulo del reto" 
+  value={title} 
+  onFocus={(e) => e.target.classList.add("border-yellow-400")}
+  onBlur={(e) => e.target.classList.remove("border-yellow-400")}
+  onChange={(e) => setTitle(e.target.value)} />
             <input 
               maxLength={200} 
-              className="form-input mt-2 rounded-lg bg-gray-200 focus:outline-none focus:shadow-outline border border-gray-300 py-2 px-4 block w-full appearance-none" 
+              className="form-input mt-2 rounded-lg bg-white focus:outline-none focus:shadow-outline border-2 border-gray-400 py-2 px-4 block w-full appearance-none p-2 mb-4"
               type="text" 
-              placeholder="Descripcion" 
+              placeholder="Descripción del reto " 
               value={description} 
+              onFocus={(e) => e.target.classList.add("border-yellow-400")}
+              onBlur={(e) => e.target.classList.remove("border-yellow-400")}
               onChange={(e) => setDescription(e.target.value)} />
             <input 
               maxLength={10} 
-              className="form-input mt-2 rounded-lg bg-gray-200 focus:outline-none focus:shadow-outline border border-gray-300 py-2 px-4 block w-full appearance-none" 
+              className="form-input mt-2 rounded-lg bg-white focus:outline-none focus:shadow-outline border-2 border-gray-400 py-2 px-4 block w-full appearance-none p-2 mb-4"
               type="price" 
               placeholder="Precio" 
               value={price} 
+              onFocus={(e) => e.target.classList.add("border-yellow-400")}
+              onBlur={(e) => e.target.classList.remove("border-yellow-400")}
               onChange={(e) => setNumber(e.target.value)} />
             <button 
-              className="mt-4 bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 px-4 rounded-full" 
+              className=" bg-yellow-400 hover:bg-yellow-700 text-Black font-bold py-2 px-4 rounded"
               type="submit">Agregar</button>
           </form>
-        </div>
-        <div className="w-1/3">
-          <img src={newReto1} alt="Product" className="h-200 w-full object-cover rounded-lg"/>
-        </div>
+        
+        
       </div>
       </Modal>
+     
+    
+    
   );
-  
-  
-} 
+}
 export default PopupDesafia;
+
+

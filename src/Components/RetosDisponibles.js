@@ -1,16 +1,25 @@
 import React, { useState, useEffect } from "react";
-
 import Retos1 from "./Retos1";
 import db from "../firebase_setup/firebase";
 import bg1 from "../Multimedia/background1.png";
 import Pagination from "./Pagination";
 import "../Styles/RetosDisponibles.css";
+import VideoPage from "./VideoPage";
 
 function RetosDisponibles({ submitVideo }) {
   const [tasks, setTasks] = useState([]);
   const [dares, setDares] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [daresPerPage] = useState(18);
+  const [NewVideoOpen, setNewVideoOpen] = useState(false);
+
+  const OpenNewVideo = () => {
+    setNewVideoOpen(true);
+  };
+
+  const CloseNewVideo = () => {
+    setNewVideoOpen(false);
+  };
 
   const addTask = (task) => {
     setTasks([...tasks, task]);
@@ -46,6 +55,7 @@ function RetosDisponibles({ submitVideo }) {
       }}
       className="bg-cover bg-blue bg-center h90 flex flex-col items-center justify-center"
     >
+      <VideoPage isOpen={NewVideoOpen} closeModal={CloseNewVideo} />
       <div
         style={{
           justifyContent: "center",
@@ -56,32 +66,42 @@ function RetosDisponibles({ submitVideo }) {
           gridTemplateRows: "1fr 1fr 1fr ",
           gridGap: "30px",
           columnGap: "40px",
-          overflowY: "scroll"
+          overflowY: "scroll",
         }}
         className="mt-10 flex-grow-1 scrollable"
-        
       >
         {currentDares.map((dare, index) => (
-          <div className="grid-item">
+          <div key={index} className="grid-item">
             <Retos1
-              key={index}
               title={dare.title}
-              bgc="#0ebeff"
+              bgc="#FDE047"
               description={dare.description}
               price={dare.price}
-              submitVideo={submitVideo}
+              OpenNewVideo={OpenNewVideo}
             />
           </div>
         ))}
       </div>
-      <div className="fixed bottom-0 w-full">
-        <div className="flex justify-center">
-          <Pagination
-            daresPerPage={daresPerPage}
-            totalDares={dares.length}
-            paginate={paginate}
-            currentPage={currentPage}
-          />
+
+      <div
+        style={{
+          position:"fixed",
+          bottom:"0",
+          right:"0",
+          left:"0",
+          overflowY: "scroll",
+          width: "20%",
+        }}
+      >
+        <div className="fixed bottom-0 w-full">
+          <div className="flex justify-center">
+            <Pagination
+              daresPerPage={daresPerPage}
+              totalDares={dares.length}
+              paginate={paginate}
+              currentPage={currentPage}
+            />
+          </div>
         </div>
       </div>
     </div>

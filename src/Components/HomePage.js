@@ -1,134 +1,171 @@
-import React, { useState, useEffect } from "react";
-import "firebase/compat/storage";
-import firebase from "firebase/compat/app";
-import "../Styles/HomePage1.css";
-import next from "../Multimedia/next.png";
-import previous from "../Multimedia/previous.png";
-import like from "../Multimedia/like.png";
-import logob from "../Multimedia/LogoBlack.png";
-import "../Styles/FranklinAve.ttf";
-const storage1 = firebase.storage().ref();
+import React, { useState, useRef } from "react";
+import video1 from "../Multimedia/video1.mp4";
+import video2 from "../Multimedia/video2.mp4";
+import video3 from "../Multimedia/video3.mp4";
+import video4 from "../Multimedia/video4.mp4";
 
-function HomePage() {
-  const [currentReto, setCurrentReto] = useState(0);
-  const [likes, setLikes] = useState(0);
-  const [comment, setComment] = useState("");
-  const [comments, setComments] = useState([]);
-  const retos = [
-    { title: "Comete una cucaracha", video: "video1.mp4" },
-    { title: "asdasdas", video: "video2.mp4" },
-    {
-      title: "Hacer una rutina de baile en público",
-      video: "video3.mp4",
-    },
+import "../Styles/DirtyBrush.ttf";
+import "../Styles/VideoPlayer.css";
+
+import bg1 from "../Multimedia/backgroundrotated.png";
+
+function HomePage({ toggleHome }) {
+  const videos = [
+    video1,
+    video2,
+    video3,
+    video4,
+    video1,
+    video1,
+    video2,
+    video3,
+    video4,
+    video1,
+    video1,
+    video2,
+    video3,
+    video4,
+    video1,
+    video1,
+    video2,
+    video3,
+    video4,
+    video1,
+    video1,
+    video2,
+    video3,
+    video4,
+    video1,
+    video1,
+    video2,
+    video3,
+    video4,
+    video1,
+    video1,
+    video2,
+    video3,
+    video4,
+    video1,
   ];
+  const [hover, setHover] = useState(false);
+  const [hoveredVideo, setHoveredVideo] = useState(null);
 
-  const [videoUrl, setVideoUrl] = useState("");
+  const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef(null);
 
-  useEffect(() => {
-    firebase
-      .storage()
-      .ref()
-      .child("videos/WhatsApp Video 2023-01-21 at 08.38.00.mp4")
-      .getDownloadURL()
-      .then((url) => setVideoUrl(url));
-  }, []);
+ 
 
-  const handleLike = () => {
-    setLikes(likes + 1);
-  };
+  const playMovie = (e) => {
+    e.target.play();
+    
+    
+  }
 
-  const handlePreviousReto = () => {
-    if (currentReto > 0) {
-      setCurrentReto(currentReto - 1);
-    }
-  };
-
-  const handleNextReto = () => {
-    if (currentReto < retos.length - 1) {
-      setCurrentReto(currentReto + 1);
-    }
-  };
-
-  const handleCommentSubmit = (e) => {
-    e.preventDefault();
-    setComments([...comments, comment]);
-    setComment("");
-  };
-
+  const stopMovie = (e) => {
+    setTimeout(() => {
+      e.target.pause();
+    }, 1000);
+    
+    
+  }
+  //className="  h-screen w-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 -z-10"   >
   return (
-    <div className="container1">
-      <div className="container">
-        <div className="arrowContainer">
-          <img
-            src={previous}
-            alt="Button"
-            onClick={handlePreviousReto}
-            className="arrow arrow-left"
-          />
-        </div>
-        <h1 className="title">
-  <span className="titleRetoRed">Reto: </span>
-  <span className="titleReto">{retos[currentReto].title}</span>
-</h1>
-<img src={logob} alt="Like" onClick={handleLike} className="logob" />
-        <div className="videoContainer">
-          {videoUrl ? (
-            <video className="video" controls>
-              <source src={videoUrl} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          ) : (
-            "Loading..."
-          )}
-        </div>
-        <div className="like-wrapper">
-          <img src={like} alt="Like" onClick={handleLike} className="like" />
+    <div
+      style={{
+        height: "91.7vh",
+        backgroundImage: `url(${bg1})`,
+        marginTop: "0px",
+        overflow: "hidden",
+
+        position: "fixed",
+      }}
+    >
+      
+      <div
+        style={{
+          height: "00px",
+          position: "absolute",
+          top: "300",
+          right: "0",
+          marginRight: "100px",
+          backgroundColor: "blue",
+          fontSize: "200px",
+          color: "#f3c016",
+          fontFamily: "Dirty Brush",
+          zIndex: "2",
           
-          <p className="like-count">Likes: <span className="ml-5">{likes}</span></p>
-        
-        </div>
-        <div className="comment-section">
-          <form
-            className="focus:outline-none focus:shadow-outline rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
-            onSubmit={handleCommentSubmit}
-          >
-            <div class="flex">
-              <input
-                type="text"
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                placeholder="Leave a comment"
-                className="flex-1 mr-2"
-              />
-              <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-3"
-                type="submit"
-              >
-                Submit
-              </button>
-            </div>
-          </form>
+    textShadow:"-2px 4px 2px black"
+        }}
+      >
+        Only Braves
+      </div>
 
-          <div>
-            {comments.map((comment, index) => (
-              <p className="comment" key={index}>
-                {comment}
-              </p>
-            ))}
-          </div>
-        </div>
+      <div
+        style={{
+          transform: `rotate(${20}deg)`,
+          width: "70%",
+          display: "flex",
+          alignItems: "flex-start",
+          justifyContent: "flex-end",
+          marginTop: "-300px",
+          marginLeft: "-150px",
+          
+          zIndex: "-1",
 
-        <div className="arrowContainer">
-          <img
-            src={next}
-            alt="Button"
-            onClick={handleNextReto}
-            className="arrow arrow-right"
-          />
+          //animation: "move-up-down 2s ease-in-out infinite alternate",
+        }}
+      >
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr 1fr",
+            gridTemplateRows: "1fr 1fr 1fr 1fr",
+            gridGap: "20px",
+            columnGap: "30px",
+          }}
+        >
+          {videos.map((video, index) => (
+            <video
+              key={index}
+              ref={videoRef}
+              src={video}
+              style={{
+                borderRadius: "15px",
+                gridColumn: `${(index % 7) + 1} / span 1`,
+                gridRow: `${Math.floor(index / 7) + 1} / span 1`,
+
+                transform: `scale(${
+                  hover && hoveredVideo === index ? 1.5 : 1
+                })`,
+                opacity: hoveredVideo === index ? 1 : 0.85,
+                zIndex: hoveredVideo === index ? 1 : 0,
+                transition: "all 0.2s ease-in-out ",
+              }}
+              autoPlay={isPlaying}
+              
+              muted
+              loop
+              onClick={toggleHome}
+              onMouseEnter={() => {
+                setHover(true);
+                setHoveredVideo(index);
+                setIsPlaying(true);
+                
+                videoRef.current.play();
+              }}
+              onMouseLeave={() => {
+                setHover(false);
+                setHoveredVideo(null);
+                
+              }}
+              onMouseOver={playMovie}
+              onMouseOut={stopMovie}
+            />
+          ))}
         </div>
       </div>
     </div>
   );
 }
+
 export default HomePage;

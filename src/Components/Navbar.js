@@ -34,7 +34,8 @@ function Navbar({ toggleLogin, toggleRegister, toggleHome, toggleDare, toggleCha
     setRegisterOpen(false);
   };
   const OpenDesafia = () => {
-    setDesafiaOpen(true);
+    setDesafiaOpen(!DesafiaOpen);
+    console.log(DesafiaOpen)
   };
 
   const CloseDesafia = () => {
@@ -52,7 +53,7 @@ function Navbar({ toggleLogin, toggleRegister, toggleHome, toggleDare, toggleCha
         <a href="/#" onClick={OpenDesafia} className="red-text">
           Desafía
         </a>
-        <PopupDesafia isOpend={false} closeModad={CloseDesafia}/>
+        <PopupDesafia  isOpen={DesafiaOpen} closeModal={CloseDesafia}/>
       </nav>
       <nav ref={navRef}>
       <button className=" bg-transparent " onClick={toggleHome}>
@@ -68,7 +69,7 @@ function Navbar({ toggleLogin, toggleRegister, toggleHome, toggleDare, toggleCha
         <a href="/#" className="red-box" onClick={OpenRegister}>
           Registrarse
         </a>
-        <PopupRegister  isOpenr={RegisterOpen} closeModalr={CloseRegister}/>
+        <PopupRegister  isOpen={RegisterOpen} closeModal={CloseRegister}/>
       </nav>
       <button className="nav-btn nav-close-btn" onClick={showNavbar}>
         <FaTimes />
