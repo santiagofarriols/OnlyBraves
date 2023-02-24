@@ -19,12 +19,7 @@ const customStyles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-
- 
-    
-    
   }
-  
 };
 
 function Popuplogin({ toggleRegister, isOpen, closeModal}) {
@@ -34,38 +29,29 @@ function Popuplogin({ toggleRegister, isOpen, closeModal}) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-
   const handleSubmit = (e) => {
-    e.preventDefault();
     setIsLoading(true);
     setIsLoading(false);
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
         setError("");
         closeModal();
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
         setError("El id o la contraseña no son correctos");
       });
   };
 
   return (
-    
-      
       <Modal
         isOpen={isOpen}
         onRequestClose={closeModal}
         style={customStyles}
-        overlayClassName="fixed inset-0 bg-gray-700 bg-opacity-70"
-      >
+        overlayClassName="fixed inset-0 bg-gray-700 bg-opacity-70">
+
         <div className="register-container text-center ">
-        
         <div className="flex w-full justify-between ">
         <div></div>
         <img className="h-20 w-20 bg-transparent border-none outline-none center"  src={logob} alt={"logo"} />
@@ -109,20 +95,13 @@ function Popuplogin({ toggleRegister, isOpen, closeModal}) {
   }} className=" bg-yellow-400 hover:bg-yellow-700 text-Black font-bold py-2 px-4 rounded" type="submit" disabled={isLoading}>
           Iniciar sesión
         </button>
-        
       </form>
-      
       <div className="texto">
-        
       <p className="p12">Si aún no tienes cuenta, regístrate <button className="link-button" onClick={toggleRegister}>aquí</button> </p>
-      
       </div>
-      
       </div>
       </Modal>
-     
-    
-    
+
   );
 }
 export default Popuplogin;

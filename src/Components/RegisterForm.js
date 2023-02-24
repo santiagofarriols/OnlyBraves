@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import BackgroundImage from '../Multimedia/background1.png';
 import YourImage from '../Multimedia/registerimage.png';
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+
 function RegisterForm() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -13,10 +16,27 @@ function RegisterForm() {
     e.preventDefault();
     setIsLoading(true);
     setError("");
-    // Aquí podrías colocar tu lógica para iniciar sesión, como hacer una petición a tu API
-    // y manejar el resultado de la petición.
-    setIsLoading(false);
-  }
+
+    firebase
+    .auth()
+    .createUserWithEmailAndPassword(email, password)
+    .then(user => {
+      user.user
+        .sendEmailVerification()
+        .then(() => {
+          setIsLoading(false);
+          setError("Registro exitoso. Por favor verifica tu correo electrónico.");
+        })
+        .catch(error => {
+          setIsLoading(false);
+          setError("Error al enviar correo electrónico de verificación: " + error.message);
+        });
+    })
+    .catch(error => {
+      setIsLoading(false);
+      setError("Error en el registro: " + error.message);
+    });
+};
 
   return (
     <div style={{

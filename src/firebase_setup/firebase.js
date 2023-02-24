@@ -6,15 +6,13 @@ import "firebase/compat/firestore";
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAcay2xn2AeeIn3pEEzLqhrkPU0squZ4oA",
-  authDomain: "doyoudare-1cbc5.firebaseapp.com",
-  storageBucket: 'gs://doyoudare-1cbc5.appspot.com',
-  databaseURL: "https://doyoudare-1cbc5-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "doyoudare-1cbc5",
-  storageBucket: "doyoudare-1cbc5.appspot.com",
-  messagingSenderId: "420825729065",
-  appId: "1:420825729065:web:00d0a72d60d18c443bf438",
-  measurementId: "G-J50KJE2NXY"
+  apiKey: "AIzaSyAzM0XZ9v6RdFIJm5TbbMlO6-eH1misws8",
+  authDomain: "onlybraves-33e80.firebaseapp.com",
+  databaseURL: "https://onlybraves-33e80-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "onlybraves-33e80",
+  storageBucket: "onlybraves-33e80.appspot.com",
+  messagingSenderId: "255767200671",
+  appId: "1:255767200671:web:29cf62492a5a24268bb3aa"
 };
 
 firebase.initializeApp(firebaseConfig);

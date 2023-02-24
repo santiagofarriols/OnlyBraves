@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import Modal from "react-modal";
-import logob from "../Multimedia/LogoBlack.png";   
+import logob from "../Multimedia/LogoBlack.png";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+
 const customStyles = {
   content: {
     width:"30vw",
@@ -15,10 +18,6 @@ const customStyles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-
- 
-    
-    
   }
   
 };
@@ -36,23 +35,36 @@ function PopupRegister({isOpen, closeModal}) {
     e.preventDefault();
     setIsLoading(true);
     setError("");
-    // Aquí podrías colocar tu lógica para iniciar sesión, como hacer una petición a tu API
-    // y manejar el resultado de la petición.
-    setIsLoading(false);
-    closeModal();
+    firebase
+    .auth()
+    .createUserWithEmailAndPassword(email, password)
+    .then(user => {
+      user.user
+        .sendEmailVerification()
+        .then(() => {
+          setIsLoading(false);
+          setError("Registro exitoso. Por favor verifica tu correo electrónico.");
+          closeModal();
+        })
+        .catch(error => {
+          setIsLoading(false);
+          setError("Error al enviar correo electrónico de verificación: " + error.message);
+        });
+    })
+    .catch(error => {
+      setIsLoading(false);
+      setError("Error en el registro: " + error.message);
+    });
   }
 
   return (
-    
-      
       <Modal
         isOpen={isOpen}
         onRequestClose={closeModal}
         style={customStyles}
-        overlayClassName="fixed inset-0 bg-gray-700 bg-opacity-70"
-      >
+        overlayClassName="fixed inset-0 bg-gray-700 bg-opacity-70">
+
         <div className="register-container text-center  ">
-        
         <div className="flex w-full justify-between  ">
         <div></div>
         <img className="h-20 w-20 bg-transparent border-none outline-none center"  src={logob} alt={"logo"} />
@@ -122,13 +134,9 @@ function PopupRegister({isOpen, closeModal}) {
           Registrarse
         </button>
       </form>
-      
     </div>
- 
       </Modal>
-     
-    
-    
+      
   );
 }
 export default PopupRegister;
