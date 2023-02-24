@@ -4,6 +4,8 @@ import logob from "../Multimedia/LogoBlack.png";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 
+Modal.setAppElement('#root');
+
 const customStyles = {
   content: {
     width:"30vw",

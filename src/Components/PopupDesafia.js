@@ -1,10 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import db from "../firebase_setup/firebase"
-import newReto1 from "../Multimedia/registerimage.png"
-import bg1 from "../Multimedia/background1.png"
 import Modal from "react-modal";
 import logob from "../Multimedia/LogoBlack.png";   
+
+Modal.setAppElement('#root');
 
 const customStyles = {
   content: {
@@ -33,18 +33,10 @@ function PopupDesafia({isOpen, closeModal}) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setNumber] = useState("");
-  const [dares, setDares] = useState([]);
 
-  const newReto = {
-    title: title,
-    description: description,
-    price: price
-  };
 
-  const ref = useRef();
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newTask = { title, description, price };
     
 
     db.collection('dares2').add({
@@ -65,8 +57,6 @@ function PopupDesafia({isOpen, closeModal}) {
   }
   useEffect(() => {
     const unsubscribe = db.collection('dares2').onSnapshot(snapshot => {
-      const daresData = snapshot.docs.map(doc => doc.data());
-      setDares(daresData);
     });
     return () => unsubscribe();
   }, []);

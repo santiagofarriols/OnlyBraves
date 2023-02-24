@@ -5,6 +5,8 @@ import "firebase/compat/auth";
 import "../Styles/login-form.css";
 import logob from "../Multimedia/LogoBlack.png";   
 
+Modal.setAppElement('#root');
+
 const customStyles = {
   content: {
     width:"30vw",
