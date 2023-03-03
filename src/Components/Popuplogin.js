@@ -32,6 +32,7 @@ function Popuplogin({ toggleRegister, isOpen, closeModal}) {
   const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
+    e.preventDefault();
     setIsLoading(true);
     setIsLoading(false);
     firebase
@@ -39,17 +40,24 @@ function Popuplogin({ toggleRegister, isOpen, closeModal}) {
       .signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
         setError("");
-        closeModal();
+        CloseAndClean();
       })
       .catch((error) => {
         setError("El id o la contraseña no son correctos");
       });
   };
 
+  const CloseAndClean = () => {
+    closeModal();
+    setEmail("");
+    setPassword("");
+    setError("");
+  };
+
   return (
       <Modal
         isOpen={isOpen}
-        onRequestClose={closeModal}
+        onRequestClose={CloseAndClean}
         style={customStyles}
         overlayClassName="fixed inset-0 bg-gray-700 bg-opacity-70">
 
@@ -57,7 +65,7 @@ function Popuplogin({ toggleRegister, isOpen, closeModal}) {
         <div className="flex w-full justify-between ">
         <div></div>
         <img className="h-20 w-20 bg-transparent border-none outline-none center"  src={logob} alt={"logo"} />
-        <button className="w-6 h-6 text-gray-700 hover:text-black" onClick={closeModal}>
+        <button className="w-6 h-6 text-gray-700 hover:text-black" onClick={CloseAndClean}>
         ✕
           </button>
           </div>

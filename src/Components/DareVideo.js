@@ -29,7 +29,7 @@ function DareVideo() {
     firebase
       .storage()
       .ref()
-      .child("videos/WhatsApp Video 2023-01-21 at 08.38.00.mp4")
+      .child("videos/video4.mp4")
       .getDownloadURL()
       .then((url) => setVideoUrl(url));
   }, []);

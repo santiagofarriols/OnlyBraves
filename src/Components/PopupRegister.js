@@ -46,10 +46,9 @@ function PopupRegister({isOpen, closeModal}) {
         .then(() => {
           setIsLoading(false);
           setError("Registro exitoso. Por favor verifica tu correo electrónico.");
-          closeModal();
+          CloseAndClean();
         })
-        .catch(error => {
-          setIsLoading(false);
+        .catch((error) => {
           setError("Error al enviar correo electrónico de verificación: " + error.message);
         });
     })
@@ -59,10 +58,20 @@ function PopupRegister({isOpen, closeModal}) {
     });
   }
 
+
+
+  const CloseAndClean = () => {
+    closeModal();
+    setEmail("");
+    setPassword("");
+    setPassword2("");
+    setUsername("");
+    setError("");
+  };
   return (
       <Modal
         isOpen={isOpen}
-        onRequestClose={closeModal}
+        onRequestClose={CloseAndClean}
         style={customStyles}
         overlayClassName="fixed inset-0 bg-gray-700 bg-opacity-70">
 
@@ -70,7 +79,7 @@ function PopupRegister({isOpen, closeModal}) {
         <div className="flex w-full justify-between  ">
         <div></div>
         <img className="h-20 w-20 bg-transparent border-none outline-none center"  src={logob} alt={"logo"} />
-        <button className="w-6 h-6 text-gray-700 hover:text-black" onClick={closeModal}>
+        <button className="w-6 h-6 text-gray-700 hover:text-black" onClick={CloseAndClean}>
         ✕
           </button>
           </div>

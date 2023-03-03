@@ -1,4 +1,3 @@
-import { logDOM } from "@testing-library/react";
 import { useRef, useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import "../Styles/main.css";
@@ -8,7 +7,7 @@ import PopupRegister from "./PopupRegister";
 import PopupDesafia from "./PopupDesafia";
 
 
-function Navbar({ toggleLogin, toggleRegister, toggleHome, toggleDare, toggleChallenge}) {
+function Navbar({  toggleHome, toggleDare}) {
   const navRef = useRef();
   const showNavbar = () => {
     navRef.current.classList.toggle("responsive_nav");
@@ -26,11 +25,13 @@ function Navbar({ toggleLogin, toggleRegister, toggleHome, toggleDare, toggleCha
     setLoginOpen(false);
   };
   const OpenRegister = () => {
+    setLoginOpen(false)
     setRegisterOpen(true);
     console.log(RegisterOpen)
   };
 
   const CloseRegister = () => {
+    
     setRegisterOpen(false);
   };
   const OpenDesafia = () => {
@@ -65,7 +66,7 @@ function Navbar({ toggleLogin, toggleRegister, toggleHome, toggleDare, toggleCha
         <a href="/#" onClick={OpenLogin}>
           Iniciar Sesión
         </a>
-        <Popuplogin toggleRegister={toggleRegister} isOpen={LoginOpen} closeModal={CloseLogin}/>
+        <Popuplogin toggleRegister={OpenRegister} isOpen={LoginOpen} closeModal={CloseLogin}/>
         <a href="/#" className="red-box" onClick={OpenRegister}>
           Registrarse
         </a>
