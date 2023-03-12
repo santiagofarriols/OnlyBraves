@@ -6,6 +6,7 @@ import next from "../Multimedia/next.png";
 import previous from "../Multimedia/previous.png";
 import like from "../Multimedia/like.png";
 import logob from "../Multimedia/LogoBlack.png";
+import comments1 from "../Multimedia/comments.png"
 import "../Styles/FranklinAve.ttf";
 const storage1 = firebase.storage().ref();
 
@@ -57,78 +58,115 @@ function DareVideo() {
   };
 
   return (
-    <div className="container1">
-      <div className="container">
-        <div className="arrowContainer">
-          <img
-            src={previous}
-            alt="Button"
-            onClick={handlePreviousReto}
-            className="arrow arrow-left"
-          />
-        </div>
+    <div style={{ display: "flex", height: "calc(100vh - 80px)" }}>
+
+
+
+    <div style={{ width: "20%", display: "flex",  minHeight:"150px" }}>
+    
+      
+      
+      <div style={{  backgroundColor: "orange", position: "relative",minHeight:"150px"  }}>
+        <img src={previous}
+          alt="Button"
+          onClick={handlePreviousReto} className="arrow arrow-left" style={{ position: "absolute", left: 0, top: "50%", transform: "translateY(-50%)" }} />
+      </div>
+    </div>
+    <div style={{ width: "1.5px", display: "flex",  height:"100%", backgroundColor:"#df8c97" }}></div>
+
+
+
+
+    <div style={{ width: "60%",height: "calc(100vh - 80px)",minHeight:"556px", boxSizing: "border-box", display: "flex", justifyContent: "space-between", alignItems: "center" , minHeight:"600px",flexDirection: "column", boxSizing: "border-box", padding: "10px",}}>
+      
+      <div style={{display: "flex", justifyContent: "center", alignItems: "center", margin:"10px" }}>
         <h1 className="title">
-  <span className="titleRetoRed">Reto: </span>
-  <span className="titleReto">{retos[currentReto].title}</span>
-</h1>
-<img src={logob} alt="Like" onClick={handleLike} className="logob" />
-        <div className="videoContainer">
-          {videoUrl ? (
-            <video className="video" controls>
+          <span className="titleRetoRed">Reto: </span>
+          <span className="titleReto">{retos[currentReto].title}</span>
+        </h1>
+        </div>
+
+        <div style={{ height: "calc(70vh - 80px)" ,  minHeight:"556px", boxSizing: "border-box", padding: "0px", display: "flex", justifyContent: "space-between", alignItems: "end" , minHeight:"440px",flexDirection: "column", boxSizing: "border-box", padding: "10px",}}>
+        <div style={{ height: "calc(70vh - 80px)" ,  minHeight:"556px", boxSizing: "border-box", padding: "0px", display: "flex", justifyContent: "space-between", alignItems: "end" , minHeight:"440px",flexDirection: "row", boxSizing: "border-box", padding: "10px",}}>
+      {videoUrl ? (
+            <video className="video" controls> 
               <source src={videoUrl} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           ) : (
             "Loading..."
           )}
-        </div>
-        <div className="like-wrapper">
-          <img src={like} alt="Like" onClick={handleLike} className="like" />
+
+
+<div className="like-wrapper">
+        <img src={like} alt="Like" onClick={handleLike} className="like" />
+
+        <p className="like-count">
+         <span>{likes}</span>
+        </p>
+
+
+        <img src={comments1} alt="Like" onClick={handleLike} className="like" />
+
+<p className="like-count">
+ <span>{likes}</span>
+</p>
+      </div>
+
+      
+      </div>
+      <div className="comment-section">
+        <form
           
-          <p className="like-count">Likes: <span className="ml-5">{likes}</span></p>
-        
-        </div>
-        <div className="comment-section">
-          <form
-            className="focus:outline-none focus:shadow-outline rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
-            onSubmit={handleCommentSubmit}
-          >
-            <div class="flex">
-              <input
-                type="text"
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                placeholder="Leave a comment"
-                className="flex-1 mr-2"
-              />
-              <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-3"
-                type="submit"
-              >
-                Submit
-              </button>
-            </div>
-          </form>
-
+          onSubmit={handleCommentSubmit}
+        >
           <div>
-            {comments.map((comment, index) => (
-              <p className="comment" key={index}>
-                {comment}
-              </p>
-            ))}
+            <input
+              type="text"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              placeholder="Leave a comment"
+              className="flex-1 mr-2"
+            />
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-3"
+              type="submit"
+            >
+              Submit
+            </button>
           </div>
-        </div>
+        </form>
 
-        <div className="arrowContainer">
-          <img
-            src={next}
-            alt="Button"
-            onClick={handleNextReto}
-            className="arrow arrow-right"
-          />
+        <div>
+          {comments.map((comment, index) => (
+            <p className="comment" key={index}>
+              {comment}
+            </p>
+          ))}
         </div>
       </div>
+      </div>
     </div>
+
+    <div style={{ width: "1.5px", display: "flex",  height:"100%", backgroundColor:"#df8c97" }}></div>
+    <div style={{ width: "20%",  height: "100%", boxSizing: "border-box", padding: "10px", display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
+
+      <div style={{  backgroundColor: "orange", position: "relative",minHeight:"150px"  }}>
+      
+        <img
+          src={next}
+          alt="Button"
+          onClick={handleNextReto}
+          className="arrow arrow-right"
+        />
+      
+        </div>
+
+    </div>
+
+
+
+  </div>
   );
 }
 export default DareVideo;

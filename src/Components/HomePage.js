@@ -73,7 +73,7 @@ function HomePage({ toggleHome }) {
     <div
       style={{
         height: "91.7vh",
-        backgroundImage: `url(${bg1})`,
+        // backgroundImage: `url(${bg1})`,
         marginTop: "0px",
         overflow: "hidden",
 
@@ -103,7 +103,7 @@ function HomePage({ toggleHome }) {
       <div
         style={{
           transform: `rotate(${20}deg)`,
-          width: "70%",
+          
           display: "flex",
           alignItems: "flex-start",
           justifyContent: "flex-end",
