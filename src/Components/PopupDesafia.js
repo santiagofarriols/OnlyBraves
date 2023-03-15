@@ -20,12 +20,7 @@ const customStyles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-
- 
-    
-    
   }
-  
 };
 
 
@@ -61,11 +56,7 @@ function PopupDesafia({isOpen, closeModal}) {
     return () => unsubscribe();
   }, []);
 
-
-
   return (
-    
-      
       <Modal
         isOpen={isOpen}
         onRequestClose={closeModal}
@@ -82,9 +73,7 @@ function PopupDesafia({isOpen, closeModal}) {
           </button>
           </div>
         <h1 className="titulo">Nuevo reto</h1>
-          
-       
-          
+        
           <form className="form-group " onSubmit={handleSubmit}>
           <input 
   maxLength={50} 
@@ -117,13 +106,8 @@ function PopupDesafia({isOpen, closeModal}) {
               className=" bg-yellow-400 hover:bg-yellow-700 text-Black font-bold py-2 px-4 rounded"
               type="submit">Agregar</button>
           </form>
-        
-        
       </div>
       </Modal>
-     
-    
-    
   );
 }
 export default PopupDesafia;

@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
-import "firebase/compat/storage";
-import firebase from "firebase/compat/app";
+import db, { storage } from '../firebase_setup/firebase';
 import "../Styles/HomePage1.css";
 import next from "../Multimedia/next.png";
 import previous from "../Multimedia/previous.png";
 import like from "../Multimedia/like.png";
-import logob from "../Multimedia/LogoBlack.png";
 import comments1 from "../Multimedia/comments.png"
 import "../Styles/FranklinAve.ttf";
-const storage1 = firebase.storage().ref();
 
 function DareVideo() {
   const [currentReto, setCurrentReto] = useState(0);
@@ -27,8 +24,7 @@ function DareVideo() {
   const [videoUrl, setVideoUrl] = useState("");
 
   useEffect(() => {
-    firebase
-      .storage()
+    storage
       .ref()
       .child("videos/video4.mp4")
       .getDownloadURL()
@@ -60,11 +56,7 @@ function DareVideo() {
   return (
     <div style={{ display: "flex", height: "calc(100vh - 80px)" }}>
 
-
-
     <div style={{ width: "20%", display: "flex",  minHeight:"150px" }}>
-    
-      
       
       <div style={{  backgroundColor: "orange", position: "relative",minHeight:"150px"  }}>
         <img src={previous}
@@ -73,9 +65,6 @@ function DareVideo() {
       </div>
     </div>
     <div style={{ width: "1.5px", display: "flex",  height:"100%", backgroundColor:"#df8c97" }}></div>
-
-
-
 
     <div style={{ width: "60%",height: "calc(100vh - 80px)",minHeight:"556px", boxSizing: "border-box", display: "flex", justifyContent: "space-between", alignItems: "center" , minHeight:"600px",flexDirection: "column", boxSizing: "border-box", padding: "10px",}}>
       

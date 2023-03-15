@@ -7,13 +7,14 @@ import "../Styles/RetosDisponibles.css";
 import VideoPage from "./VideoPage";
 
 function RetosDisponibles({ submitVideo }) {
-  const [tasks, setTasks] = useState([]);
   const [dares, setDares] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [daresPerPage] = useState(18);
   const [NewVideoOpen, setNewVideoOpen] = useState(false);
+  const [selectedDare, setSelectedDare] = useState(null);
 
-  const OpenNewVideo = () => {
+  const OpenNewVideo = (dare) => {
+    setSelectedDare(dare);
     setNewVideoOpen(true);
   };
 
@@ -21,17 +22,20 @@ function RetosDisponibles({ submitVideo }) {
     setNewVideoOpen(false);
   };
 
-  const addTask = (task) => {
-    setTasks([...tasks, task]);
+  const deleteDare = async (docId) => {
+    await db.collection("dares").doc(docId).delete();
   };
-
-  const changeForm = () => {
-    submitVideo("video");
+  
+  const addCompletedDare = async (dare) => {
+    await db.collection("completedDares").add(dare);
   };
 
   useEffect(() => {
-    const unsubscribe = db.collection("dares2").onSnapshot((snapshot) => {
-      const daresData = snapshot.docs.map((doc) => doc.data());
+    const unsubscribe = db.collection("dares").onSnapshot((snapshot) => {
+      const daresData = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data()
+      }));
       setDares(daresData);
     });
     return () => unsubscribe();
@@ -55,7 +59,7 @@ function RetosDisponibles({ submitVideo }) {
       }}
       className="bg-cover bg-blue bg-center h90 flex flex-col items-center justify-center"
     >
-      <VideoPage isOpen={NewVideoOpen} closeModal={CloseNewVideo} />
+      <VideoPage isOpen={NewVideoOpen} dare={selectedDare} closeModal={CloseNewVideo} deleteDare={deleteDare} addCompletedDare={addCompletedDare} />
       <div
         style={{
           justifyContent: "center",
@@ -77,7 +81,7 @@ function RetosDisponibles({ submitVideo }) {
               bgc="#FDE047"
               description={dare.description}
               price={dare.price}
-              OpenNewVideo={OpenNewVideo}
+              OpenNewVideo={() => OpenNewVideo(dare)}
             />
           </div>
         ))}
@@ -91,21 +95,21 @@ function RetosDisponibles({ submitVideo }) {
           left:"0",
           overflowY: "scroll",
           width: "20%",
-        }}
-      >
-        <div className="fixed bottom-0 w-full">
+          }}
+          >
+          <div className="fixed bottom-0 w-full">
           <div className="flex justify-center">
-            <Pagination
-              daresPerPage={daresPerPage}
-              totalDares={dares.length}
-              paginate={paginate}
-              currentPage={currentPage}
-            />
+          <Pagination
+                     daresPerPage={daresPerPage}
+                     totalDares={dares.length}
+                     paginate={paginate}
+                     currentPage={currentPage}
+                   />
           </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default RetosDisponibles;
+          </div>
+          </div>
+          </div>
+          );
+          }
+          
+          export default RetosDisponibles;

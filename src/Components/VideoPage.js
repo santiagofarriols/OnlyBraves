@@ -18,10 +18,6 @@ const customStyles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-
- 
-    
-    
   }
   
 };
