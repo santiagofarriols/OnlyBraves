@@ -96,15 +96,19 @@ function Popuplogin({ toggleRegister, isOpen, closeModal}) {
             </label>
             <br />
         {error && <p>{error}</p>}
-        <button onClick={() => {
+        <button
+  onClick={(e) => {
     if (error) {
       return;
     }
-    handleSubmit();
-    
-  }} className=" bg-yellow-400 hover:bg-yellow-700 text-Black font-bold py-2 px-4 rounded" type="submit" disabled={isLoading}>
-          Iniciar sesión
-        </button>
+    handleSubmit(e);
+  }}
+  className="bg-yellow-400 hover:bg-yellow-700 text-Black font-bold py-2 px-4 rounded"
+  type="submit"
+  disabled={isLoading}
+>
+  Iniciar sesión
+</button>
       </form>
       <div className="texto">
       <p className="p12">Si aún no tienes cuenta, regístrate <button className="link-button" onClick={toggleRegister}>aquí</button> </p>

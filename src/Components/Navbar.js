@@ -7,7 +7,9 @@ import Popuplogin from './Popuplogin';
 import PopupRegister from './PopupRegister';
 import PopupDesafia from './PopupDesafia';
 import { useContext } from 'react';
-import { AuthContext } from './AuthContext'; // Importa el AuthContext
+import { AuthContext } from './AuthContext';
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
 
 function Navbar({ toggleHome, toggleDare }) {
   const navRef = useRef();
@@ -15,7 +17,7 @@ function Navbar({ toggleHome, toggleDare }) {
     navRef.current.classList.toggle('responsive_nav');
   };
 
-  const { currentUser } = useContext(AuthContext); // Utiliza el AuthContext para acceder al usuario actual
+  const { currentUser } = useContext(AuthContext); // AuthContext para acceder al usuario actual
   const [LoginOpen, setLoginOpen] = useState(false);
   const [RegisterOpen, setRegisterOpen] = useState(false);
   const [DesafiaOpen, setDesafiaOpen] = useState(false);
@@ -45,6 +47,10 @@ function Navbar({ toggleHome, toggleDare }) {
     setDesafiaOpen(false);
   };
 
+  const handleLogout = () => {
+    firebase.auth().signOut();
+  };
+
   return (
     <header>
       <nav ref={navRef}>
@@ -63,9 +69,17 @@ function Navbar({ toggleHome, toggleDare }) {
         </Link>
       </nav>
       <nav ref={navRef}>
-        <a href="/#" onClick={OpenLogin}>
-          Iniciar Sesión
-        </a>
+      {
+        currentUser ? (
+            <a href="/#" onClick={handleLogout}>
+              Desconectarse
+            </a>
+          ) : (
+            <a href="/#" onClick={OpenLogin}>
+              Iniciar Sesión
+            </a>
+          )
+        }
         <Popuplogin toggleRegister={OpenRegister} isOpen={LoginOpen} closeModal={CloseLogin} />
         <a href="/#" className="red-box" onClick={OpenRegister}>
           Registrarse
