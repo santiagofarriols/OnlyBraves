@@ -48,7 +48,7 @@ function PopupDesafia({ isOpen, closeModal }) {
         title,
         description,
         price,
-        userId: uid,
+        ownerID: uid,
       };
       await addDare(dare);
     } else {

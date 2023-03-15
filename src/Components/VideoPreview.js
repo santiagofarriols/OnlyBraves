@@ -1,36 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import 'firebase/compat/storage';
 import firebase from 'firebase/compat/app';
 import db from '../firebase_setup/firebase';
+import { AuthContext } from '../Components/AuthContext';
 
 const storage = firebase.storage().ref();
 
 function VideoPreview({ file, dare }) {
   const [progress, setProgress] = useState(0);
-
-  const moveDareToCompleted = async () => {
+  const { currentUser } = useContext(AuthContext);
+  
+  const moveDareToCompleted = async (videoUrl) => {
     try {
-      await db.collection('completedDares').add(dare);
-      await db.collection('dares2').doc(dare.id).delete();
+      const completedDare = { ...dare, videoUrl, braveId: currentUser.uid };
+      await db.collection('completedDares').add(completedDare);
+      await db.collection('dares').doc(dare.id).delete();
     } catch (error) {
       console.error('Error al mover el reto: ', error);
     }
   };
+  
 
   const handleUploadVideo = async () => {
-    const user = firebase.auth().currentUser;
-    if (!user) {
+    if (!currentUser) {
       alert('Inicia sesión para subir videos');
       return;
     }
     const storageRef = storage;
-    const videoRef = storageRef.child(`videos/${file.name}`);
-
+    const userId = currentUser.uid; 
+    const videoRef = storageRef.child(`${userId}/videos/${file.name}`); 
+  
     const snapshot = await videoRef.put(file);
-
+  
     setProgress(snapshot.bytesTransferred / snapshot.totalBytes * 100);
-
-    await moveDareToCompleted();
+  
+    // Obtenemos la URL del video subido
+    const videoUrl = await snapshot.ref.getDownloadURL();
+  
+    // Pasamos la URL del video a moveDareToCompleted
+    await moveDareToCompleted(videoUrl);
   };
 
   return (
