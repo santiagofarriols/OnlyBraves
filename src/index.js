@@ -3,11 +3,14 @@ import ReactDOM from 'react-dom/client';
 import './Styles/index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { AuthProvider } from './Components/AuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <AuthProvider> {/* Envuelve la aplicación en el AuthProvider */}
+      <App />
+    </AuthProvider>
   </React.StrictMode>
 );
 

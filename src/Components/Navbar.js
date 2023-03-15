@@ -6,6 +6,8 @@ import logo from '../Multimedia/logo.png';
 import Popuplogin from './Popuplogin';
 import PopupRegister from './PopupRegister';
 import PopupDesafia from './PopupDesafia';
+import { useContext } from 'react';
+import { AuthContext } from './AuthContext'; // Importa el AuthContext
 
 function Navbar({ toggleHome, toggleDare }) {
   const navRef = useRef();
@@ -13,6 +15,7 @@ function Navbar({ toggleHome, toggleDare }) {
     navRef.current.classList.toggle('responsive_nav');
   };
 
+  const { currentUser } = useContext(AuthContext); // Utiliza el AuthContext para acceder al usuario actual
   const [LoginOpen, setLoginOpen] = useState(false);
   const [RegisterOpen, setRegisterOpen] = useState(false);
   const [DesafiaOpen, setDesafiaOpen] = useState(false);

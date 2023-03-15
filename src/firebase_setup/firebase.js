@@ -1,5 +1,4 @@
 import firebase from 'firebase/compat/app';
-
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
@@ -16,6 +15,7 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 const db = firebase.firestore();
 
 export default db
