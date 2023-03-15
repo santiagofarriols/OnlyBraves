@@ -1,34 +1,38 @@
-import { Button } from 'bootstrap';
-import React, {Component} from 'react'
-import '../Styles/Estilos/Retos1.css'
+import React, { useContext } from 'react';
+import '../Styles/Estilos/Retos1.css';
+import { AuthContext } from './AuthContext';
 
+const Retos1 = (props) => {
+  const { currentUser } = useContext(AuthContext);
 
-class Retos1 extends Component {
-    handleClick = () => {
-        this.props.OpenNewVideo();
-      }
-    render() {
-        return (
-            
-            <div className="card">
-                
-                <div className="precio">{this.props.price}€
-                <div className="titulo">{this.props.title}</div>
-                <div className="line" style={{backgroundColor: this.props.bgc}}></div>
-                <div className="bottom">
-                <div className="descripcion">{this.props.description}</div>
-                <div className="Realizar">
-                <button className="btn btn-primary" onClick={this.handleClick}  type="submit">Realizar Reto</button>
-                
-                </div>
-               
+  const handleClick = () => {
+    props.OpenNewVideo();
+  };
 
-                
-                </div>
-                </div>
-            </div>
-        )
-    }
-}
-//onClick={this.props.toggleVideo("home")}
+  return (
+    <div className="card">
+      <div className="precio">
+        {props.price}€
+        <div className="titulo">{props.title}</div>
+        <div className="line" style={{ backgroundColor: props.bgc }}></div>
+        <div className="bottom">
+          <div className="descripcion">{props.description}</div>
+          <div className="Realizar">
+            <button
+              className={`btn ${
+                currentUser ? "btn-primary" : "btn-secondary cursor-not-allowed"
+              }`}
+              onClick={handleClick}
+              type="submit"
+              disabled={!currentUser}
+            >
+              Realizar Reto
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default Retos1;

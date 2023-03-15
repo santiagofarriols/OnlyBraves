@@ -17,7 +17,7 @@ function Navbar({ toggleHome, toggleDare }) {
     navRef.current.classList.toggle('responsive_nav');
   };
 
-  const { currentUser } = useContext(AuthContext); // AuthContext para acceder al usuario actual
+  const { currentUser } = useContext(AuthContext);
   const [LoginOpen, setLoginOpen] = useState(false);
   const [RegisterOpen, setRegisterOpen] = useState(false);
   const [DesafiaOpen, setDesafiaOpen] = useState(false);
