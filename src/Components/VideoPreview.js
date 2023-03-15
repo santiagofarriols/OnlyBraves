@@ -10,6 +10,11 @@ function VideoPreview({ file}) {
 
 
   const handleUploadVideo = async () => {
+    const user = firebase.auth().currentUser;
+    if (!user) {
+      alert('Inicia sesión para subir videos');
+      return;
+    }
     const storageRef = storage;
     const videoRef = storageRef.child(`videos/${file.name}`);
    
