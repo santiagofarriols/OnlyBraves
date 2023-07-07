@@ -51,12 +51,7 @@ function RetosDisponibles({ submitVideo }) {
 
   return (
     <div
-      style={{
-        height: "91.7vh",
-        backgroundImage: `url(${bg1})`,
-        marginTop: "0px",
-        overflow: "hidden",
-      }}
+     
       className="bg-cover bg-blue bg-center h90 flex flex-col items-center justify-center"
     >
       <VideoPage isOpen={NewVideoOpen} dare={selectedDare} closeModal={CloseNewVideo} deleteDare={deleteDare} addCompletedDare={addCompletedDare} />
