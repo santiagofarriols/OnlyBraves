@@ -71,19 +71,26 @@ function Navbar({ toggleHome, toggleDare }) {
       <nav ref={navRef}>
       {
         currentUser ? (
-            <a href="/#" onClick={handleLogout}>
-              Desconectarse
-            </a>
+            <div>
+              <a href="/#" onClick={handleLogout}>
+                Desconectarse
+              </a>
+              <Link to="/perfil">
+                Perfil
+              </Link>
+            </div>
           ) : (
-            <a href="/#" onClick={OpenLogin}>
-              Iniciar Sesión
-            </a>
+            <div>
+              <a href="/#" onClick={OpenLogin}>
+                Iniciar Sesión
+              </a>
+              <a href="/#" className="red-box" onClick={OpenRegister}>
+                Registrarse
+              </a>
+            </div>
           )
         }
         <Popuplogin toggleRegister={OpenRegister} isOpen={LoginOpen} closeModal={CloseLogin} />
-        <a href="/#" className="red-box" onClick={OpenRegister}>
-          Registrarse
-        </a>
         <PopupRegister isOpen={RegisterOpen} closeModal={CloseRegister} />
       </nav>
       <button className="nav-btn nav-close-btn" onClick={showNavbar}>

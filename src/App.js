@@ -5,6 +5,7 @@ import RetosDisponibles from './Components/RetosDisponibles';
 import VideoPage from './Components/VideoPage';
 import HomeContainer from './Components/HomeContainer';
 import Navbar from './Components/Navbar';
+import UserProfile from './Components/UserProfile';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="/reto" element={<DareVideo />} />
             <Route path="/video" element={<VideoPage />} />
             <Route path="/atrevete" element={<RetosDisponibles />} />
+            <Route path="/perfil" element={<UserProfile />} /> {/* Agrega una ruta para el perfil de usuario */}
           </Routes>
         </main>
       </Router>
