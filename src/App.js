@@ -6,6 +6,7 @@ import VideoPage from './Components/VideoPage';
 import HomeContainer from './Components/HomeContainer';
 import Navbar from './Components/Navbar';
 import UserProfile from './Components/UserProfile';
+import AdminRequests from './Components/AdminRequests'; // Importa el componente AdminRequests
 
 function App() {
   return (
@@ -18,7 +19,8 @@ function App() {
             <Route path="/reto" element={<DareVideo />} />
             <Route path="/video" element={<VideoPage />} />
             <Route path="/atrevete" element={<RetosDisponibles />} />
-            <Route path="/perfil" element={<UserProfile />} /> {/* Agrega una ruta para el perfil de usuario */}
+            <Route path="/perfil" element={<UserProfile />} />
+            <Route path="/solicitudes" element={<AdminRequests />} /> {/* Agrega una ruta para las solicitudes de administrador */}
           </Routes>
         </main>
       </Router>

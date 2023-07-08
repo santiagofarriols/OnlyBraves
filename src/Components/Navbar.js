@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import '../Styles/main.css';
@@ -21,6 +21,22 @@ function Navbar({ toggleHome, toggleDare }) {
   const [LoginOpen, setLoginOpen] = useState(false);
   const [RegisterOpen, setRegisterOpen] = useState(false);
   const [DesafiaOpen, setDesafiaOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    if (currentUser) {
+      firebase.auth().currentUser.getIdTokenResult()
+        .then((idTokenResult) => {
+          // Confirmar si el usuario es un administrador.
+          if (!!idTokenResult.claims.admin) {
+            setIsAdmin(true);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [currentUser]);
 
   const OpenLogin = () => {
     setLoginOpen(true);
@@ -32,7 +48,6 @@ function Navbar({ toggleHome, toggleDare }) {
   const OpenRegister = () => {
     setLoginOpen(false);
     setRegisterOpen(true);
-    console.log(RegisterOpen);
   };
 
   const CloseRegister = () => {
@@ -40,7 +55,6 @@ function Navbar({ toggleHome, toggleDare }) {
   };
   const OpenDesafia = () => {
     setDesafiaOpen(!DesafiaOpen);
-    console.log(DesafiaOpen);
   };
 
   const CloseDesafia = () => {
@@ -57,6 +71,10 @@ function Navbar({ toggleHome, toggleDare }) {
         <Link to="/atrevete" onClick={toggleDare}>
           Atrévete
         </Link>
+
+        {isAdmin && <Link to="/solicitudes">
+          Solicitudes
+        </Link>}
 
         <a href="/#" onClick={OpenDesafia} className="red-text">
           Desafía
