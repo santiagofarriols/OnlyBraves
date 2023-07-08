@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import Retos1 from "./Retos1";
 import db from "../firebase_setup/firebase";
-import bg1 from "../Multimedia/background1.png";
 import Pagination from "./Pagination";
 import "../Styles/RetosDisponibles.css";
 import VideoPage from "./VideoPage";

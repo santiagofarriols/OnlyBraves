@@ -58,6 +58,7 @@ function PopupDesafia({ isOpen, closeModal }) {
     setTitle("");
     setDescription("");
     setNumber("");
+    closeModal();
   };
 
   useEffect(() => {

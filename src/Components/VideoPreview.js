@@ -6,13 +6,15 @@ import { AuthContext } from '../Components/AuthContext';
 
 const storage = firebase.storage().ref();
 
-function VideoPreview({ file, dare }) {
+function VideoPreview({ file, dare, closeModal }) { // Asegúrate de pasar la función closeModal como prop
   const [progress, setProgress] = useState(0);
+  const [uploading, setUploading] = useState(false);
   const { currentUser } = useContext(AuthContext);
   
   const moveDareToPending = async (videoUrl) => {
     try {
-      const pendingDare = { ...dare, videoUrl, braveId: currentUser.uid };
+      const { id, ...dareWithoutId } = dare; // Esto separa el id del resto de los campos en el objeto dare
+      const pendingDare = { ...dareWithoutId, videoUrl, braveID: currentUser.uid };
       await db.collection('pendingDares').add(pendingDare);
       await db.collection('dares').doc(dare.id).delete();
     } catch (error) {
@@ -26,6 +28,7 @@ function VideoPreview({ file, dare }) {
       alert('Inicia sesión para subir videos');
       return;
     }
+    setUploading(true);
     const storageRef = storage;
     const userId = currentUser.uid; 
     const videoRef = storageRef.child(`${userId}/videos/${file.name}`); 
@@ -39,6 +42,8 @@ function VideoPreview({ file, dare }) {
   
     // Pasamos la URL del video a moveDareToPending
     await moveDareToPending(videoUrl);
+    setUploading(false);
+    closeModal(); // Cierra el modal después de que el video se haya subido
   };
 
   return (
@@ -47,7 +52,7 @@ function VideoPreview({ file, dare }) {
       <br />
       <progress value={progress} max="100" />
       <br />
-      <button onClick={handleUploadVideo}>Subir video</button>
+      <button onClick={handleUploadVideo} disabled={uploading}>Subir video</button>
     </div>
   );
 }

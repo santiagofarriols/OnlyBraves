@@ -68,7 +68,7 @@ function VideoPage({ isOpen, closeModal, dare }) {
           <div>
             <VideoUploadInput setSelectedFile={setSelectedFile} />
             {selectedFile && (
-              <VideoPreview file={selectedFile} handleUpload={handleUpload} dare={dare} />
+              <VideoPreview file={selectedFile} handleUpload={handleUpload} dare={dare} closeModal={closeModal} />
             )}
           </div>
         </div>
