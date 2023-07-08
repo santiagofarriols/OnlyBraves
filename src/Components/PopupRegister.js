@@ -41,6 +41,12 @@ function PopupRegister({isOpen, closeModal}) {
     .auth()
     .createUserWithEmailAndPassword(email, password)
     .then(user => {
+      // Agrega el campo de rol en la base de datos de usuarios
+      firebase.database().ref('users/' + user.user.uid).set({
+        username: username,
+        email: email,
+        role: 'user' // Por defecto, todos los usuarios tienen el rol de 'user'
+      });
       user.user
         .sendEmailVerification()
         .then(() => {
@@ -56,7 +62,7 @@ function PopupRegister({isOpen, closeModal}) {
       setIsLoading(false);
       setError("Error en el registro: " + error.message);
     });
-  }
+  }  
 
 
 

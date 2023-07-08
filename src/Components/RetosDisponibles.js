@@ -25,7 +25,7 @@ function RetosDisponibles({ submitVideo }) {
   const deleteDare = async (docId) => {
     await db.collection("dares").doc(docId).delete();
   };
-  
+
   const addCompletedDare = async (dare) => {
     await db.collection("completedDares").add(dare);
   };
@@ -34,7 +34,7 @@ function RetosDisponibles({ submitVideo }) {
     const unsubscribe = db.collection("dares").onSnapshot((snapshot) => {
       const daresData = snapshot.docs.map((doc) => ({
         id: doc.id,
-        ...doc.data()
+        ...doc.data(),
       }));
       setDares(daresData);
     });
@@ -50,11 +50,14 @@ function RetosDisponibles({ submitVideo }) {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div
-     
-      className="bg-cover bg-blue bg-center h90 flex flex-col items-center justify-center"
-    >
-      <VideoPage isOpen={NewVideoOpen} dare={selectedDare} closeModal={CloseNewVideo} deleteDare={deleteDare} addCompletedDare={addCompletedDare} />
+    <div className="bg-cover bg-blue bg-center h90 flex flex-col items-center justify-center">
+      <VideoPage
+        isOpen={NewVideoOpen}
+        dare={selectedDare}
+        closeModal={CloseNewVideo}
+        deleteDare={deleteDare}
+        addCompletedDare={addCompletedDare}
+      />
       <div
         style={{
           justifyContent: "center",
@@ -84,27 +87,27 @@ function RetosDisponibles({ submitVideo }) {
 
       <div
         style={{
-          position:"fixed",
-          bottom:"0",
-          right:"0",
-          left:"0",
+          position: "fixed",
+          bottom: "0",
+          right: "0",
+          left: "0",
           overflowY: "scroll",
           width: "20%",
-          }}
-          >
-          <div className="fixed bottom-0 w-full">
+        }}
+      >
+        <div className="fixed bottom-0 w-full">
           <div className="flex justify-center">
-          <Pagination
-                     daresPerPage={daresPerPage}
-                     totalDares={dares.length}
-                     paginate={paginate}
-                     currentPage={currentPage}
-                   />
+            <Pagination
+              daresPerPage={daresPerPage}
+              totalDares={dares.length}
+              paginate={paginate}
+              currentPage={currentPage}
+            />
           </div>
-          </div>
-          </div>
-          </div>
-          );
-          }
-          
-          export default RetosDisponibles;
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default RetosDisponibles;
