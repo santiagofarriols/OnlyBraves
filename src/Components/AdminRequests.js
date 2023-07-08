@@ -1,30 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import '../Styles/AdminRequests.css';
+import db from '../firebase_setup/firebase';
 
 function AdminRequests() {
   const [requests, setRequests] = useState([]);
 
-  // Simulamos la obtención de las solicitudes desde Firebase
   useEffect(() => {
-    // Aquí deberías obtener las solicitudes desde Firebase
-    // Por ahora, solo usaremos datos de prueba
-    const mockRequests = [
-      { id: 1, user: 'Usuario 1', challenge: 'Reto 1', status: 'Pendiente' },
-      { id: 2, user: 'Usuario 2', challenge: 'Reto 2', status: 'Pendiente' },
-      // Agrega más solicitudes de prueba aquí
-    ];
-
-    setRequests(mockRequests);
+    const unsubscribe = db.collection('pendingDares').onSnapshot((snapshot) => {
+      const requestData = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setRequests(requestData);
+    });
+    return () => unsubscribe();
   }, []);
 
-  const handleApprove = (id) => {
+  const handleApprove = async (id, request) => {
     // Aquí deberías actualizar el estado de la solicitud en Firebase
     console.log(`Aprobada la solicitud ${id}`);
+    // Mover el reto de pendingDares a completedDares
+    await db.collection('completedDares').add(request);
+    await db.collection('pendingDares').doc(id).delete();
   };
 
-  const handleReject = (id) => {
+  const handleReject = async (id) => {
     // Aquí deberías actualizar el estado de la solicitud en Firebase
     console.log(`Rechazada la solicitud ${id}`);
+    // Eliminar el reto de pendingDares
+    await db.collection('pendingDares').doc(id).delete();
   };
 
   return (
@@ -32,10 +36,13 @@ function AdminRequests() {
       <h1>Solicitudes</h1>
       {requests.map((request) => (
         <div key={request.id} className="request-card">
-          <h2>{request.user}</h2>
-          <p>{request.challenge}</p>
-          <p>{request.status}</p>
-          <button onClick={() => handleApprove(request.id)}>Aprobar</button>
+          <h2>{request.title}</h2>
+          <p>{request.description}</p>
+          <p>Precio: {request.price}</p>
+          <p>ID del usuario: {request.userId}</p>
+          <p>ID del reto: {request.braveId}</p>
+          <a href={request.videoUrl} target="_blank" rel="noreferrer">Ver video</a>
+          <button onClick={() => handleApprove(request.id, request)}>Aprobar</button>
           <button onClick={() => handleReject(request.id)}>Rechazar</button>
         </div>
       ))}

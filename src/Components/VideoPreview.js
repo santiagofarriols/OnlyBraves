@@ -10,10 +10,10 @@ function VideoPreview({ file, dare }) {
   const [progress, setProgress] = useState(0);
   const { currentUser } = useContext(AuthContext);
   
-  const moveDareToCompleted = async (videoUrl) => {
+  const moveDareToPending = async (videoUrl) => {
     try {
-      const completedDare = { ...dare, videoUrl, braveId: currentUser.uid };
-      await db.collection('completedDares').add(completedDare);
+      const pendingDare = { ...dare, videoUrl, braveId: currentUser.uid };
+      await db.collection('pendingDares').add(pendingDare);
       await db.collection('dares').doc(dare.id).delete();
     } catch (error) {
       console.error('Error al mover el reto: ', error);
@@ -37,8 +37,8 @@ function VideoPreview({ file, dare }) {
     // Obtenemos la URL del video subido
     const videoUrl = await snapshot.ref.getDownloadURL();
   
-    // Pasamos la URL del video a moveDareToCompleted
-    await moveDareToCompleted(videoUrl);
+    // Pasamos la URL del video a moveDareToPending
+    await moveDareToPending(videoUrl);
   };
 
   return (
