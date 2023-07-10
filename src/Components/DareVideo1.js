@@ -20,6 +20,7 @@ const DareVideo1 = () => {
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [completedDares, setCompletedDares] = useState([]);
+  const [videoUrl, setVideoUrl] = useState("");  // Añade esta línea
   const videoRef = useRef();
 
   const handlePlayPause = () => {
@@ -37,9 +38,18 @@ const DareVideo1 = () => {
         ...doc.data(),
       }));
       setCompletedDares(completedDaresData);
+      setCurrentReto(0);  // Reinicia currentReto a 0 cada vez que se cargan nuevos retos
     });
+  
     return () => unsubscribe();
   }, []);
+  
+  useEffect(() => {
+    if (completedDares[currentReto]) {
+      setVideoUrl(completedDares[currentReto].videoUrl);
+    }
+  }, [completedDares, currentReto]);
+  
 
   const handleLike = () => {
     setLikes(likes + 1);
@@ -87,19 +97,19 @@ const DareVideo1 = () => {
             onClick={handleNextReto}
             className="arrow arrow-right"
           />
-          {completedDares[currentReto]?.videoUrl ? (
+          {videoUrl ? (
             <div className="video-wrapper">
               <video className="video-blur" controls>
-                <source src={completedDares[currentReto]?.videoUrl} type="video/mp4" />
+                <source src={videoUrl} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
 
               <div className="video-focused">
-                <video className="video" ref={videoRef} autoPlay >
-                  <source src={completedDares[currentReto]?.videoUrl} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-
+              <video className="video" ref={videoRef} autoPlay key={completedDares[currentReto]?.videoUrl}>
+                <source src={completedDares[currentReto]?.videoUrl} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+              
                 <button className="play-pause-button" onClick={handlePlayPause}>
                   {videoRef.current && videoRef.current.paused ? "Play" : "Pause"}
                 </button>

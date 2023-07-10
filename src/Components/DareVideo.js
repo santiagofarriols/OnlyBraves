@@ -31,6 +31,7 @@ function DareVideo() {
       .then((url) => setVideoUrl(url));
   }, []);
 
+
   const handleLike = () => {
     setLikes(likes + 1);
   };
@@ -93,16 +94,12 @@ function DareVideo() {
         <p className="like-count">
          <span>{likes}</span>
         </p>
-
-
         <img src={comments1} alt="Like" onClick={handleLike} className="like" />
 
 <p className="like-count">
  <span>{likes}</span>
 </p>
       </div>
-
-      
       </div>
       <div className="comment-section">
         <form
@@ -148,13 +145,9 @@ function DareVideo() {
           onClick={handleNextReto}
           className="arrow arrow-right"
         />
-      
+
         </div>
-
     </div>
-
-
-
   </div>
   );
 }
