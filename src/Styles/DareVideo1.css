@@ -75,6 +75,21 @@
     overflow-y: auto;
   }
 
+  .comment {
+    border: 1px solid #ffbcbc;
+    border-radius: 30px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #ea3c5362;
+
+    backdrop-filter: blur(0px);
+    width: 100%;  /* adjust as needed */
+    height: 100px; /* adjust as needed */
+    overflow: hidden; /* hides content that is taller than the box */
+    position: relative; /* allows us to position the "Ver más" button at the bottom of the box */
+    word-wrap: break-word; /* ensures that long words don't overflow the box */
+  }
+
 .video2 {
   height: 100%;
   object-fit: cover; /* Asegura que el vídeo se ajuste, pero mantenga su aspecto */

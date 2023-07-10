@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import DareVideo from './Components/DareVideo';
+import DareVideo1 from './Components/DareVideo1';
 import RetosDisponibles from './Components/RetosDisponibles';
 import VideoPage from './Components/VideoPage';
 import HomeContainer from './Components/HomeContainer';
@@ -16,7 +16,7 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<HomeContainer />} />
-            <Route path="/reto" element={<DareVideo />} />
+            <Route path="/reto" element={<DareVideo1 />} />
             <Route path="/video" element={<VideoPage />} />
             <Route path="/atrevete" element={<RetosDisponibles />} />
             <Route path="/perfil" element={<UserProfile />} />
