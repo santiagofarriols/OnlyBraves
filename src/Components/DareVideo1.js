@@ -8,8 +8,6 @@ import comments1 from "../Multimedia/comments.png"
 import "../Styles/FranklinAve.ttf";
 import '../Styles/DareVideo1.css';
 
-
-
 const TopLeftBox = () => (
   <div className="top-left-box">
     <p>Contenido de TopLeftBox</p>
@@ -21,15 +19,7 @@ const DareVideo1 = () => {
   const [likes, setLikes] = useState(0);
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
-
-  const retos = [
-    { title: "Comete una cucaracha", video: "video1.mp4" },
-    { title: "asdasdas", video: "video2.mp4" },
-    { title: "Hacer una rutina de baile en público", video: "video3.mp4" },
-  ];
-
-  const [videoUrl, setVideoUrl] = useState("");
-
+  const [completedDares, setCompletedDares] = useState([]);
   const videoRef = useRef();
 
   const handlePlayPause = () => {
@@ -41,11 +31,14 @@ const DareVideo1 = () => {
   };
 
   useEffect(() => {
-    storage
-      .ref()
-      .child("videos/video4.mp4")
-      .getDownloadURL()
-      .then((url) => setVideoUrl(url));
+    const unsubscribe = db.collection('completedDares').onSnapshot((snapshot) => {
+      const completedDaresData = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setCompletedDares(completedDaresData);
+    });
+    return () => unsubscribe();
   }, []);
 
   const handleLike = () => {
@@ -59,7 +52,7 @@ const DareVideo1 = () => {
   };
 
   const handleNextReto = () => {
-    if (currentReto < retos.length - 1) {
+    if (currentReto < completedDares.length - 1) {
       setCurrentReto(currentReto + 1);
     }
   };
@@ -77,7 +70,7 @@ const DareVideo1 = () => {
  
   <h1 className="title">
     <span className="titleRetoRed">Reto: </span>
-    <span className="titleReto">{retos[currentReto].title}</span>
+    <span className="titleReto">{completedDares[currentReto]?.title}</span>
   </h1>
 
 </div>
@@ -94,16 +87,16 @@ const DareVideo1 = () => {
             onClick={handleNextReto}
             className="arrow arrow-right"
           />
-          {videoUrl ? (
+          {completedDares[currentReto]?.videoUrl ? (
             <div className="video-wrapper">
               <video className="video-blur" controls>
-                <source src={videoUrl} type="video/mp4" />
+                <source src={completedDares[currentReto]?.videoUrl} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
 
               <div className="video-focused">
                 <video className="video" ref={videoRef} autoPlay >
-                  <source src={videoUrl} type="video/mp4" />
+                  <source src={completedDares[currentReto]?.videoUrl} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
 

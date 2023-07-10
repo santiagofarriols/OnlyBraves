@@ -76,7 +76,7 @@ function Navbar({ toggleHome, toggleDare }) {
           Solicitudes
         </Link>}
 
-        <a class="button" onClick={OpenDesafia} className="red-text">
+        <a class="button" onClick={OpenDesafia}>
           Desafía
         </a>
         <PopupDesafia isOpen={DesafiaOpen} closeModal={CloseDesafia} />
@@ -102,7 +102,7 @@ function Navbar({ toggleHome, toggleDare }) {
               <a class="button" onClick={OpenLogin}>
                 Iniciar Sesión
               </a>
-              <a class="button" className="red-box" onClick={OpenRegister}>
+              <a class="button" onClick={OpenRegister}>
                 Registrarse
               </a>
             </div>

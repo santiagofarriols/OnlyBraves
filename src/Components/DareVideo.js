@@ -13,7 +13,7 @@ function DareVideo() {
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const retos = [
-    { title: "Comete una cucaracha", video: "video1.mp4" },
+    { title: "Comete una cusadcaracha", video: "video1.mp4" },
     { title: "asdasdas", video: "video2.mp4" },
     {
       title: "Hacer una rutina de baile en público",
