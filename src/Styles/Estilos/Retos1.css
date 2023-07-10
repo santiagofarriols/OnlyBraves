@@ -98,7 +98,14 @@ $white = #cccccc */
 
    
 }
+.redondeo {
 
+  border-radius: 30px !important;
+  
+
+
+   
+}
 h2 {
   margin: 0;
 }

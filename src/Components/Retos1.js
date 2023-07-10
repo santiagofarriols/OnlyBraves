@@ -10,7 +10,7 @@ const Retos1 = (props) => {
   };
 
   return (
-    <div className="card">
+    <div className="card redondeo">
       <div className="precio">
         {props.price}€
         <div className="titulo">{props.title}</div>

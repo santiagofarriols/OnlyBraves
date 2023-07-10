@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import HomePage from './HomePage';
-import DareVideo from './DareVideo';
+import DareVideo1 from './DareVideo1';
 
 function HomeContainer({ toggleHome }) {
   const [showDareVideo, setShowDareVideo] = useState(false);
@@ -12,7 +12,7 @@ function HomeContainer({ toggleHome }) {
   return (
     <>
       {!showDareVideo && <HomePage toggleHome={toggleHomeContainer} />}
-      {showDareVideo && <DareVideo toggleHome={toggleHomeContainer} />}
+      {showDareVideo && <DareVideo1 toggleHome={toggleHomeContainer} />}
     </>
   );
 }
