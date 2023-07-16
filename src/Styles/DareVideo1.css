@@ -24,7 +24,7 @@
   margin: 10px;
   padding: 10px;
   
-  border: 1px solid #000;
+  border: 1px solid #7979792a;
   border-radius: 35px;
   height: 100%;
   position: relative; /* Para posicionar TopLeftBox respecto a este elemento */
@@ -47,6 +47,7 @@
     top: 50%;
     transform: translateY(-50%);
     z-index: 2; 
+    cursor: pointer;
   }
 
   .arrow-right {
@@ -55,6 +56,7 @@
     top: 50%;
     transform: translateY(-50%);
     z-index: 2; /* Asegúrate de que esté encima del video desenfocado */
+    cursor: pointer;
   }
 
   .columna2 {
@@ -62,6 +64,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2); /* Agrega la sombra */
   }
   
   .comment-section {
@@ -69,18 +72,20 @@
     flex-direction: column;
     justify-content: flex-end;
     height: 100%;
+   
   }
   
   .comments-container {
     overflow-y: auto;
+    
   }
 
   .comment {
-    border: 1px solid #ffbcbc;
+    border: 1px solid #ffbcbc4f;
     border-radius: 30px;
     padding: 10px;
     margin-bottom: 10px;
-    background-color: #ea3c5362;
+    background-color: #e78a962f;
 
     backdrop-filter: blur(0px);
     width: 100%;  /* adjust as needed */
@@ -93,6 +98,7 @@
 .video2 {
   height: 100%;
   object-fit: cover; /* Asegura que el vídeo se ajuste, pero mantenga su aspecto */
+  z-index: 1;
 }
 
 
@@ -100,6 +106,7 @@
   position: relative;
   width: 100%;
   height: 100%;
+  z-index: 1;
 }
 
 
@@ -110,6 +117,7 @@
   transform: translate(-50%, -50%);
   /* Estiliza el botón a tu gusto aquí. */
   z-index: 2; 
+  cursor: pointer;
 }
 
 .video-blur {

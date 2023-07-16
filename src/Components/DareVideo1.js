@@ -7,6 +7,8 @@ import like from "../Multimedia/like.png";
 import comments1 from "../Multimedia/comments.png"
 import "../Styles/FranklinAve.ttf";
 import '../Styles/DareVideo1.css';
+import '../Styles/CommentForm.css';
+
 
 const TopLeftBox = () => (
   <div className="top-left-box">
@@ -86,7 +88,7 @@ const DareVideo1 = () => {
 </div>
       <div className="frame">
         <div className="columna columna1">
-          <TopLeftBox />
+          {/* <TopLeftBox /> */}
 
           <img src={previous}
             alt="Button"
@@ -120,7 +122,7 @@ const DareVideo1 = () => {
           )}
         </div>
         <div className="columna columna2">
-          <p>Contenido de la columna 2</p>
+         
 
           <div className="comment-section">
     <div className="comments-container">
@@ -130,18 +132,17 @@ const DareVideo1 = () => {
         </p>
       ))}
     </div>
-
     <form onSubmit={handleCommentSubmit}>
-      <div>
+      <div >
         <input
           type="text"
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           placeholder="Deja un comentario"
-          className="flex-1 mr-2"
+          className="flex-1 mr-2 rounded-input"
         />
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-3"
+          className="button"
           type="submit"
         >
           Enviar
