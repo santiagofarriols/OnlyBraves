@@ -85,7 +85,7 @@ function PopupDesafia({ isOpen, closeModal }) {
         <h1 className="titulo">Nuevo reto</h1>
         <form className="form-group " onSubmit={handleSubmit}>
           <input
-            maxLength={50}
+            maxLength={30}
             className="form-input mt-2 rounded-lg bg-white focus:outline-none focus:shadow-outline border-2 border-gray-400 py-2 px-4 block w-full appearance-none p-2 mb-4"
             type="text"
             placeholder="Titulo del reto"
@@ -95,7 +95,7 @@ function PopupDesafia({ isOpen, closeModal }) {
             onChange={(e) => setTitle(e.target.value)}
           />
           <input
-            maxLength={200}
+            maxLength={170}
             className="form-input mt-2 rounded-lg bg-white focus:outline-none focus:shadow-outline border-2 border-gray-400 py-2 px-4 block w-full appearance-none p-2 mb-4"
             type="text"
             placeholder="Descripción del reto "
@@ -105,7 +105,7 @@ function PopupDesafia({ isOpen, closeModal }) {
             onChange={(e) => setDescription(e.target.value)}
           />
           <input
-            maxLength={10}
+            maxLength={4}
             className="form-input mt-2 rounded-lg bg-white focus:outline-none focus:shadow-outline border-2 border-gray-400 py-2 px-4 block w-full appearance-none p-2 mb-4"
             type="price"
             placeholder="Precio"
