@@ -6,8 +6,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-  
+  flex-direction: column;  
 }
 
 .frame {
@@ -16,15 +15,17 @@
   width: 70%;
   height: 70%;
   margin:1%;
-
-  
 }
 
 .columna {
   margin: 10px;
   padding: 10px;
+<<<<<<< Updated upstream
   
   border: 1px solid #7979792a;
+=======
+  border: 1px solid #000;
+>>>>>>> Stashed changes
   border-radius: 35px;
   height: 100%;
   position: relative; /* Para posicionar TopLeftBox respecto a este elemento */
@@ -32,7 +33,6 @@
 
 .columna1 {
   flex: 0.7;
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -41,42 +41,61 @@
     overflow: hidden; /* Oculta cualquier contenido que sobresalga del contenedor */
   }
 
-  .arrow-left {
+.arrow-left {
     position: absolute;
     left: 0;
     top: 50%;
     transform: translateY(-50%);
+<<<<<<< Updated upstream
     z-index: 2; 
     cursor: pointer;
   }
+=======
+    z-index: 3; 
+}
+>>>>>>> Stashed changes
 
-  .arrow-right {
+.arrow-right {
     position: absolute;
     right: 0;
     top: 50%;
     transform: translateY(-50%);
+<<<<<<< Updated upstream
     z-index: 2; /* Asegúrate de que esté encima del video desenfocado */
     cursor: pointer;
   }
+=======
+    z-index: 3; /* Asegúrate de que esté encima del video desenfocado */
+}
+>>>>>>> Stashed changes
 
-  .columna2 {
+.columna2 {
     flex: 0.3;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+<<<<<<< Updated upstream
     box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2); /* Agrega la sombra */
   }
+=======
+}
+>>>>>>> Stashed changes
   
-  .comment-section {
+.comment-section {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     height: 100%;
+<<<<<<< Updated upstream
    
   }
+=======
+}
+>>>>>>> Stashed changes
   
-  .comments-container {
+.comments-container {
     overflow-y: auto;
+<<<<<<< Updated upstream
     
   }
 
@@ -87,13 +106,23 @@
     margin-bottom: 10px;
     background-color: #e78a962f;
 
+=======
+}
+
+.comment {
+    border: 1px solid #ffbcbc;
+    border-radius: 30px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #ea3c5362;
+>>>>>>> Stashed changes
     backdrop-filter: blur(0px);
     width: 100%;  /* adjust as needed */
     height: 100px; /* adjust as needed */
     overflow: hidden; /* hides content that is taller than the box */
     position: relative; /* allows us to position the "Ver más" button at the bottom of the box */
     word-wrap: break-word; /* ensures that long words don't overflow the box */
-  }
+}
 
 .video2 {
   height: 100%;
@@ -163,29 +192,26 @@
   align-items: center;
   height: 10vh; /* puedes ajustar este valor según tus necesidades */
   width: 100%; /* puedes ajustar este valor según tus necesidades */
-  
   text-align: center;
   overflow: hidden;
 }
 
 .title {
   font-size: 2.5vw; /* puedes ajustar este valor según tus necesidades */
-
 }
 
-
-
 @media (max-width: 600px) {
-  .frame {
+
+.frame {
       flex-direction: column;
       height: auto;
-  }
+}
 
-  .columna {
+.columna {
       width: 100%;
-  }
+}
 
-  .columna1, .columna2 {
+.columna1, .columna2 {
       flex: none;
   }
 }
