@@ -62,7 +62,9 @@ function Navbar({ toggleHome, toggleDare }) {
   };
 
   const handleLogout = () => {
-    firebase.auth().signOut();
+    firebase.auth().signOut().then(() => {
+      window.location.reload();
+    });
   };
 
   return (
