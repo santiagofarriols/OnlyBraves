@@ -149,10 +149,10 @@
 
 .title-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   height: 10vh; /* puedes ajustar este valor según tus necesidades */
-  width: 100%; /* puedes ajustar este valor según tus necesidades */
+  width: 67%; /* puedes ajustar este valor según tus necesidades */
   text-align: center;
   overflow: hidden;
   margin-top: -30px;
@@ -161,6 +161,14 @@
 .title {
   font-size: 2.5vw; /* puedes ajustar este valor según tus necesidades */
 }
+
+.price {
+  text-align: right; /* puedes ajustar este valor según tus necesidades */
+  color:#EA3C53;
+  font-family: 'FranklinAve', sans-serif;
+  font-size: 70px;
+}
+
 
 @media (max-width: 600px) {
 

@@ -149,12 +149,13 @@ const DareVideo1 = () => {
           <span className="titleReto">{completedDares[currentReto]?.title}</span>
         </h1>
         <h2 className="price">
-        Precio: {completedDares[currentReto]?.price}
+         {completedDares[currentReto]?.price} €
         </h2>
-        {isAdmin && (
+        
+      </div>
+      {isAdmin && (
           <button onClick={handleDeleteVideo}>Eliminar video</button>
         )}
-      </div>
       <div className="frame">
         <div className="columna columna1">
           <img src={previous}
