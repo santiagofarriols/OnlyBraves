@@ -205,14 +205,14 @@ const DareVideo1 = () => {
   <div className="send-container">
     <input
       type="text"
-      className="form-control"
-      placeholder="Escribe tu comentario aquí..."
+      placeholder="Deja un comentario"
+      className="flex-1 mr-2 rounded-input"
       value={comment}
       onChange={(e) => setComment(e.target.value)}
       required
     />
-    <button type="submit" className="btn-send">
-      <img src={send} alt="Send" />
+     <button className="send" type="submit">
+      <img src={send} alt="Enviar" />
     </button>
   </div>
 </form>
