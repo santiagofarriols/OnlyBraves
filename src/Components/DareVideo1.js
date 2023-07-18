@@ -12,7 +12,6 @@ import send from '../Multimedia/SEND.png';
 import { useContext } from 'react';
 import { AuthContext } from './AuthContext';
 
-const TopLeftBox = () => (
 const DareVideo1 = () => {
   const { currentUser } = useContext(AuthContext);
   const [currentReto, setCurrentReto] = useState(0);
