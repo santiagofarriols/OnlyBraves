@@ -55,17 +55,25 @@ function PopupDesafia({ isOpen, closeModal }) {
       console.log("No user is currently signed in.");
     }
 
+    resetInputs();
+    closeModal();
+  };
+
+  const resetInputs = () => {
     setTitle("");
     setDescription("");
     setNumber("");
-    closeModal();
-  };
+  }
 
   useEffect(() => {
     const unsubscribe = db.collection('dares').onSnapshot(snapshot => {
     });
     return () => unsubscribe();
   }, []);
+
+  useEffect(() => {
+    if (!isOpen) resetInputs();
+  }, [isOpen]);
 
   return (
     <Modal
@@ -129,4 +137,4 @@ function PopupDesafia({ isOpen, closeModal }) {
     );
   }
   
-  export default PopupDesafia;  
+  export default PopupDesafia;
