@@ -78,7 +78,7 @@ function Popuplogin({ toggleRegister, isOpen, closeModal}) {
               Email:
               <input
                className="w-full border border-gray-400 p-2 mb-4"
-               placeholder="Titulo del reto" 
+                
                 type="text"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
