@@ -147,28 +147,16 @@ const DareVideo1 = () => {
   
     // Ejecutar la transacción batch
     await batch.commit();
+
+    const videoRef = db.collection('completedDares').doc(videoId);
+
+    // Eliminar el video
+    await videoRef.delete();
     
-    try {
-      const daresCollection = db.collection('completedDares');
-      const docToDelete = await daresCollection.where('id', '==', videoId).get();
-  
-      if (!docToDelete.empty) {
-        docToDelete.docs[0].ref.delete().then(() => {
-          console.log("Document successfully deleted!");
-        }).catch((error) => {
-          console.error("Error removing document: ", error);
-        });
-  
-        // Actualizar la lista de videos
-        const newCompletedDares = completedDares.filter((dare) => dare.id !== videoId);
-        setCompletedDares(newCompletedDares);
-      } else {
-        console.log("No documents found");
-      }
-  
-    } catch (error) {
-      console.error("Error eliminando el video: ", error);
-    }
+    // Actualizar la lista de videos
+    const newCompletedDares = completedDares.filter((dare) => dare.id !== videoId);
+    setCompletedDares(newCompletedDares);
+
   };
   
 

@@ -3,68 +3,113 @@ import '../Styles/AdminRequests.css';
 import db from '../firebase_setup/firebase';
 
 function AdminRequests() {
-  const [requests, setRequests] = useState([]);
+  const [proposedDares, setProposedDares] = useState([]);
+  const [pendingDares, setPendingDares] = useState([]);
 
   useEffect(() => {
-    const unsubscribe = db.collection('pendingDares').onSnapshot((snapshot) => {
-      const requestData = snapshot.docs.map((doc) => ({
+    const unsubscribeProposed = db.collection('proposedDares').onSnapshot((snapshot) => {
+      const proposedData = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-      setRequests(requestData);
+      setProposedDares(proposedData);
     });
-    return () => unsubscribe();
+
+    const unsubscribePending = db.collection('pendingDares').onSnapshot((snapshot) => {
+      const pendingData = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setPendingDares(pendingData);
+    });
+
+    return () => {
+      unsubscribeProposed();
+      unsubscribePending();
+    };
   }, []);
 
-  const handleApprove = async (id, request) => {
+  const handleApprove = async (id, dare, type) => {
     console.log("Aprobando reto", id);
+    const { id: _, ...dareWithoutId } = dare; // Elimina el campo id del objeto dare
     try {
-      // Mover el reto de pendingDares a completedDares
-      await db.collection('completedDares').add(request);
-      await db.collection('pendingDares').doc(id).delete();
+      // Si es una propuesta, la movemos a pendingDares
+      if (type === 'proposed') {
+        await db.collection('dares').add(dareWithoutId);
+      } 
+      // Si es pendiente, la movemos a completedDares
+      else if (type === 'pending') {
+        await db.collection('completedDares').add(dareWithoutId);
+      }
+      // Eliminamos la dare original
+      await db.collection(type + 'Dares').doc(id).delete();
     } catch (error) {
       console.error("Error al aprobar el reto: ", error);
     }
   };
-
-  const handleReject = async (id, request) => {
+  
+  const handleReject = async (id, dare, type) => {
     console.log("Rechazando reto", id);
+    const { id: _, ...dareWithoutId } = dare; // Elimina el campo id del objeto dare
     try {
-      // Mover el reto de pendingDares a dares con los campos especificados
-      const { description, ownerID, price, title } = request; // Cambia ownerID a userId
-      await db.collection('dares').add({ description, ownerID, price, title });
-      await db.collection('pendingDares').doc(id).delete();
+      await db.collection('dares').add(dareWithoutId);
+      await db.collection(type + 'Dares').doc(id).delete();
     } catch (error) {
       console.error("Error al rechazar el reto: ", error);
     }
   };
-
-  const handleDelete = async (id) => {
+  
+  
+  const handleDelete = async (id, type) => {
     console.log("Eliminando reto", id);
     try {
-      // Eliminar el reto de pendingDares
-      await db.collection('pendingDares').doc(id).delete();
+      // Eliminar el reto de proposedDares/pendingDares
+      await db.collection(type + 'Dares').doc(id).delete();
     } catch (error) {
       console.error("Error al eliminar el reto: ", error);
     }
   };
 
+  
   return (
     <div className="requests-container">
       <h1>Solicitudes</h1>
-      {requests.map((request) => (
-        <div key={request.id} className="request-card">
-          <h2>{request.title}</h2>
-          <p>{request.description}</p>
-          <p>Precio: {request.price}</p>
-          <p>ID del usuario: {request.braveID}</p>
-          <p>ID del owner: {request.ownerID}</p>
-          <a href={request.videoUrl} target="_blank" rel="noreferrer">Ver video</a>
-          <button onClick={() => handleApprove(request.id, request)}>Aprobar</button>
-          <button onClick={() => handleReject(request.id, request)}>Rechazar</button>
-          <button onClick={() => handleDelete(request.id)}>Eliminar</button>
-        </div>
-      ))}
+
+      <div className="proposed-dares-card">
+        <h2>Propuestas</h2>
+        {proposedDares.map((dare) => (
+          <div key={dare.id} className="dare-card">
+            <h2>{dare.title}</h2>
+            <p>{dare.description}</p>
+            <p>Precio: {dare.price}</p>
+            <p>ID del usuario: {dare.braveID}</p>
+            <p>ID del owner: {dare.ownerID}</p>
+            <a href={dare.videoUrl} target="_blank" rel="noreferrer">Ver video</a>
+            <button onClick={() => handleApprove(dare.id, dare, 'proposed')}>Aprobar</button>
+            <button onClick={() => handleReject(dare.id, dare, 'proposed')}>Rechazar</button>
+            <button onClick={() => handleDelete(dare.id, 'proposed')}>Eliminar</button>
+
+          </div>
+        ))}
+      </div>
+
+      <div className="pending-dares-card">
+        <h2>Pendientes</h2>
+        {pendingDares.map((dare) => (
+          <div key={dare.id} className="dare-card">
+            <h2>{dare.title}</h2>
+            <p>{dare.description}</p>
+            <p>Precio: {dare.price}</p>
+            <p>ID del usuario: {dare.braveID}</p>
+            <p>ID del owner: {dare.ownerID}</p>
+            <a href={dare.videoUrl} target="_blank" rel="noreferrer">Ver video</a>
+            <button onClick={() => handleApprove(dare.id, dare, 'pending')}>Aprobar</button>
+            <button onClick={() => handleReject(dare.id, dare, 'pending')}>Rechazar</button>
+            <button onClick={() => handleDelete(dare.id, 'pending')}>Eliminar</button>
+
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
