@@ -14,7 +14,7 @@
   }
 
   .titulo {
-    font-size: 0.7em;
+    font-size: 0.7em !important;
     font-weight: bold;
     color: #cccccc;
     text-align: center;

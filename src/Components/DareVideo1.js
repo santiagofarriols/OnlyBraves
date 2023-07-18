@@ -8,6 +8,7 @@ import comments1 from "../Multimedia/comments.png"
 import "../Styles/FranklinAve.ttf";
 import '../Styles/DareVideo1.css';
 import '../Styles/CommentForm.css';
+import send from '../Multimedia/SEND.png';
 
 const TopLeftBox = () => (
   <div className="top-left-box">
@@ -164,22 +165,19 @@ const DareVideo1 = () => {
               ))}
             </div>
             <form onSubmit={handleCommentSubmit}>
-              <div>
-                <input
-                  type="text"
-                  value={comment}
-                  onChange={(e) => setComment(e.target.value)}
-                  placeholder="Deja un comentario"
-                  className="flex-1 mr-2 rounded-input"
-                />
-                <button
-                  className="button"
-                  type="submit"
-                >
-                  Enviar
-                </button>
-              </div>
-            </form>
+  <div className="send-container">
+    <input
+      type="text"
+      value={comment}
+      onChange={(e) => setComment(e.target.value)}
+      placeholder="Deja un comentario"
+      className="flex-1 mr-2 rounded-input"
+    />
+    <button className="send" type="submit">
+      <img src={send} alt="Enviar" />
+    </button>
+  </div>
+</form>
           </div>
         </div>
       </div>
