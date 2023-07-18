@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import db, { storage } from '../firebase_setup/firebase';
+import db, { storage } from '../../firebase_setup/firebase';
 import "../Styles/HomePage1.css";
 import next from "../Multimedia/next.png";
 import previous from "../Multimedia/previous.png";
