@@ -128,18 +128,32 @@ const DareVideo1 = () => {
     // Eliminar el comentario
     await commentRef.delete();
   };
-
   const handleDeleteVideo = async () => {
     const videoId = completedDares[currentReto].id;
-    const videoRef = db.collection('completedDares').doc(videoId);
-
-    // Eliminar el video
-    await videoRef.delete();
-
-    // Actualizar la lista de videos
-    const newCompletedDares = completedDares.filter((dare) => dare.id !== videoId);
-    setCompletedDares(newCompletedDares);
+  
+    try {
+      const daresCollection = db.collection('completedDares');
+      const docToDelete = await daresCollection.where('id', '==', videoId).get();
+  
+      if (!docToDelete.empty) {
+        docToDelete.docs[0].ref.delete().then(() => {
+          console.log("Document successfully deleted!");
+        }).catch((error) => {
+          console.error("Error removing document: ", error);
+        });
+  
+        // Actualizar la lista de videos
+        const newCompletedDares = completedDares.filter((dare) => dare.id !== videoId);
+        setCompletedDares(newCompletedDares);
+      } else {
+        console.log("No documents found");
+      }
+  
+    } catch (error) {
+      console.error("Error eliminando el video: ", error);
+    }
   };
+  
 
   return (
     <div className="container3">
