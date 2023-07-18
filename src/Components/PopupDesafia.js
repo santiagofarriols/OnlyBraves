@@ -83,6 +83,14 @@ function PopupDesafia({ isOpen, closeModal }) {
     return () => unsubscribe();
   }, []);
 
+  useEffect(() => {
+    if(isOpen) {
+      setTitle("");
+      setDescription("");
+      setNumber("");
+    }
+  }, [isOpen]);
+  
   return (
     <Modal
       isOpen={isOpen}
