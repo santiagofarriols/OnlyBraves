@@ -9,6 +9,7 @@ import comments1 from "../Multimedia/comments.png"
 import "../Styles/FranklinAve.ttf";
 import '../Styles/DareVideo1.css';
 import '../Styles/CommentForm.css';
+import send from '../Multimedia/SEND.png';
 
 const DareVideo1 = () => {
   const [currentReto, setCurrentReto] = useState(0);

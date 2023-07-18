@@ -52,17 +52,20 @@
   }
 
   .titulo {
-    font-size: 1.5em;
+    font-size: 1em !important;
     font-weight: bold;
     color: #333;
     text-align: start;
+    max-width: 500px !important;
+    
   }
 
   .descripcion {
-    font-size: 0.8em;
+    font-size: 0.5em !important;
     color: #999;
     text-align: start;
     margin-bottom: 0px;
+    max-width: 400px;
    
     width: 70%;
   }
@@ -71,6 +74,7 @@
     color: #f74643;
     text-align: end;
     margin-bottom: 0px;
+    
   }
  
 }
@@ -83,8 +87,9 @@ $black = #28282b
 $white = #cccccc */
 
 .card {
-  max-width: 100%;
-  height: 200px;
+  max-width: 450PX;
+  height: 200px !important;
+  max-height: 200px;
   background-color: #ffffff;
   color: rgb(255, 255, 255);
   box-sizing: border-box;

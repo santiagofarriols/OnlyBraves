@@ -20,4 +20,18 @@ input.rounded-input {
   button.button:hover {
     background-color: darkblue;
   }
+  .send-container {
+    display: flex;
+    align-items: center;
+  }
   
+  .send {
+    display: flex;
+    align-items: center;
+    margin-left: 8px;
+  }
+  
+  .send img {
+    width: 42px;
+    height: 42px;
+  }
