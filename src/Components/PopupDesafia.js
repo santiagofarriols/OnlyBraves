@@ -44,44 +44,36 @@ function PopupDesafia({ isOpen, closeModal }) {
     e.preventDefault();
 
     if (uid) {
-      if (title.length < 5 || title.length > 30) {
-        alert("El título debe tener entre 5 y 30 caracteres.");
-        return;
-      }
-
-      if (description.length < 20 || description.length > 200) {
-        alert("La descripción debe tener entre 20 y 200 caracteres.");
-        return;
-      }
-
-      if (isNaN(price) || price < 0) {
-        alert("Por favor, introduzca un precio válido.");
-        return;
-      }
-
       const dare = {
         title,
         description,
         price,
         ownerID: uid,
       };
-
       await addDare(dare);
     } else {
       console.log("No user is currently signed in.");
     }
 
+    resetInputs();
+    closeModal();
+  };
+
+  const resetInputs = () => {
     setTitle("");
     setDescription("");
     setNumber("");
-    closeModal();
-  };
+  }
 
   useEffect(() => {
     const unsubscribe = db.collection('dares').onSnapshot(snapshot => {
     });
     return () => unsubscribe();
   }, []);
+
+  useEffect(() => {
+    if (!isOpen) resetInputs();
+  }, [isOpen]);
 
   return (
     <Modal
@@ -101,7 +93,7 @@ function PopupDesafia({ isOpen, closeModal }) {
         <h1 className="titulo">Nuevo reto</h1>
         <form className="form-group " onSubmit={handleSubmit}>
           <input
-            maxLength={50}
+            maxLength={30}
             className="form-input mt-2 rounded-lg bg-white focus:outline-none focus:shadow-outline border-2 border-gray-400 py-2 px-4 block w-full appearance-none p-2 mb-4"
             type="text"
             placeholder="Titulo del reto"
@@ -111,7 +103,7 @@ function PopupDesafia({ isOpen, closeModal }) {
             onChange={(e) => setTitle(e.target.value)}
           />
           <input
-            maxLength={200}
+            maxLength={170}
             className="form-input mt-2 rounded-lg bg-white focus:outline-none focus:shadow-outline border-2 border-gray-400 py-2 px-4 block w-full appearance-none p-2 mb-4"
             type="text"
             placeholder="Descripción del reto "
@@ -123,7 +115,7 @@ function PopupDesafia({ isOpen, closeModal }) {
           <input
             maxLength={4}
             className="form-input mt-2 rounded-lg bg-white focus:outline-none focus:shadow-outline border-2 border-gray-400 py-2 px-4 block w-full appearance-none p-2 mb-4"
-            type="number"
+            type="price"
             placeholder="Precio"
             value={price}
             onFocus={(e) => e.target.classList.add("border-yellow-400")}
@@ -142,7 +134,7 @@ function PopupDesafia({ isOpen, closeModal }) {
         </form>
       </div>
     </Modal>
-  );
-}
-
-export default PopupDesafia;
+    );
+  }
+  
+  export default PopupDesafia;
