@@ -13,11 +13,6 @@ import { useContext } from 'react';
 import { AuthContext } from './AuthContext';
 
 const TopLeftBox = () => (
-  <div className="top-left-box">
-    <p>Contenido de TopLeftBox</p>
-  </div>
-);
-
 const DareVideo1 = () => {
   const { currentUser } = useContext(AuthContext);
   const [currentReto, setCurrentReto] = useState(0);
@@ -89,7 +84,6 @@ const DareVideo1 = () => {
       return () => unsubscribe();
     }
   }, [completedDares, currentReto]);
-  
 
   const handleLike = () => {
     setLikes(likes + 1);
@@ -136,6 +130,18 @@ const DareVideo1 = () => {
     await commentRef.delete();
   };
 
+  const handleDeleteVideo = async () => {
+    const videoId = completedDares[currentReto].id;
+    const videoRef = db.collection('completedDares').doc(videoId);
+
+    // Eliminar el video
+    await videoRef.delete();
+
+    // Actualizar la lista de videos
+    const newCompletedDares = completedDares.filter((dare) => dare.id !== videoId);
+    setCompletedDares(newCompletedDares);
+  };
+
   return (
     <div className="container3">
       <div className="title-container">
@@ -146,6 +152,9 @@ const DareVideo1 = () => {
         <h2 className="price">
         Precio: {completedDares[currentReto]?.price}
         </h2>
+        {isAdmin && (
+          <button onClick={handleDeleteVideo}>Eliminar video</button>
+        )}
       </div>
       <div className="frame">
         <div className="columna columna1">
@@ -197,13 +206,14 @@ const DareVideo1 = () => {
   <div className="send-container">
     <input
       type="text"
+      className="form-control"
+      placeholder="Escribe tu comentario aquí..."
       value={comment}
       onChange={(e) => setComment(e.target.value)}
-      placeholder="Deja un comentario"
-      className="flex-1 mr-2 rounded-input"
+      required
     />
-    <button className="send" type="submit">
-      <img src={send} alt="Enviar" />
+    <button type="submit" className="btn-send">
+      <img src={send} alt="Send" />
     </button>
   </div>
 </form>

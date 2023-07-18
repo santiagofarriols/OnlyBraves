@@ -20,4 +20,4 @@ function setAdmin(email) {
 }
 
 // Reemplaza 'user@example.com' con el correo electrónico del usuario que quieres establecer como administrador
-setAdmin('tomasadison2014@gmail.com');
+setAdmin('facultadfing@gmail.com');
