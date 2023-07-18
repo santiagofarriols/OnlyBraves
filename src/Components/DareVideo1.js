@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import db, { storage, auth } from '../firebase_setup/firebase'; // Añade auth aquí
-import firebase from 'firebase/app';  // Importa firebase para usar FieldValue
+import db, { storage, auth, firebase } from '../firebase_setup/firebase';
 import "../Styles/HomePage1.css";
 import next from "../Multimedia/next.png";
 import previous from "../Multimedia/previous.png";
@@ -98,7 +97,7 @@ const DareVideo1 = () => {
       userId,
       videoId,
       text: comment,
-      timestamp: db.firestore.FieldValue.serverTimestamp(),  
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     };
 
     try {
