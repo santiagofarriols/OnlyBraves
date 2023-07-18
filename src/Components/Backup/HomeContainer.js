@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import HomePage from './HomePage';
-import DareVideo1 from './DareVideo1';
+import HomePage from './HomePage.js';
+import DareVideo1 from '../DareVideo1.js';
 
 function HomeContainer({ toggleHome }) {
   const [showDareVideo, setShowDareVideo] = useState(false);
