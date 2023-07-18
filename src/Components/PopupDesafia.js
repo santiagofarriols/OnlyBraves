@@ -43,7 +43,7 @@ function PopupDesafia({ isOpen, closeModal }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-e    if (uid) {
+    if (uid) {
       const dare = {
         title,
         description,
