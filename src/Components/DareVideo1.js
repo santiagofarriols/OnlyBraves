@@ -127,10 +127,27 @@ const DareVideo1 = () => {
   
     // Eliminar el comentario
     await commentRef.delete();
-  };
+  
+    // Actualizar la lista de comentarios en el estado
+    const newComments = comments.filter((comment) => comment.id !== commentId);
+    setComments(newComments);
+  };  
+
   const handleDeleteVideo = async () => {
     const videoId = completedDares[currentReto].id;
+    
+    // Empezar una nueva transacción batch
+    const batch = db.batch();
   
+    // Borrar todos los comentarios asociados con el video
+    const commentsSnapshot = await db.collection('comments').where('videoId', '==', videoId).get();
+    commentsSnapshot.forEach((doc) => {
+      batch.delete(doc.ref);
+    });
+  
+    // Ejecutar la transacción batch
+    await batch.commit();
+    
     try {
       const daresCollection = db.collection('completedDares');
       const docToDelete = await daresCollection.where('id', '==', videoId).get();
