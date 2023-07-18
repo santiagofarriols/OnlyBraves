@@ -107,6 +107,9 @@ const DareVideo1 = () => {
           <span className="titleRetoRed">Reto: </span>
           <span className="titleReto">{completedDares[currentReto]?.title}</span>
         </h1>
+        <h2 className="price">
+        Precio: {completedDares[currentReto]?.price}
+      </h2>
       </div>
       <div className="frame">
         <div className="columna columna1">
