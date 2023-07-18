@@ -9,6 +9,8 @@ import "../Styles/FranklinAve.ttf";
 import '../Styles/DareVideo1.css';
 import '../Styles/CommentForm.css';
 import send from '../Multimedia/SEND.png';
+import { useContext } from 'react';
+import { AuthContext } from './AuthContext';
 
 const TopLeftBox = () => (
   <div className="top-left-box">
@@ -17,6 +19,7 @@ const TopLeftBox = () => (
 );
 
 const DareVideo1 = () => {
+  const { currentUser } = useContext(AuthContext);
   const [currentReto, setCurrentReto] = useState(0);
   const [likes, setLikes] = useState(0);
   const [comment, setComment] = useState("");
@@ -24,6 +27,22 @@ const DareVideo1 = () => {
   const [completedDares, setCompletedDares] = useState([]);
   const [videoUrl, setVideoUrl] = useState("");  
   const videoRef = useRef();
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    if (currentUser) {
+      firebase.auth().currentUser.getIdTokenResult()
+        .then((idTokenResult) => {
+          // Confirmar si el usuario es un administrador.
+          if (!!idTokenResult.claims.admin) {
+            setIsAdmin(true);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [currentUser]);
 
   const handlePlayPause = () => {
     if (videoRef.current.paused) {
@@ -110,6 +129,13 @@ const DareVideo1 = () => {
     }
   };
 
+  const handleDeleteComment = async (commentId) => {
+    const commentRef = db.collection('comments').doc(commentId);
+  
+    // Eliminar el comentario
+    await commentRef.delete();
+  };
+
   return (
     <div className="container3">
       <div className="title-container">
@@ -161,6 +187,9 @@ const DareVideo1 = () => {
                 <div className="comment" key={index}>
                   <p>{comment.text}</p>
                   <p>Hecho por: {comment.userId}</p>
+                  {isAdmin && (
+            <button onClick={() => handleDeleteComment(comment.id)}>Eliminar</button>
+          )}
                 </div>
               ))}
             </div>
