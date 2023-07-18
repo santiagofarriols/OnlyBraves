@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import db, { storage } from '../firebase_setup/firebase';
+import db, { storage, auth } from '../firebase_setup/firebase'; 
+import { getFirestore, collection, onSnapshot, addDoc, serverTimestamp } from "firebase/firestore"; 
 import "../Styles/HomePage1.css";
 import next from "../Multimedia/next.png";
 import previous from "../Multimedia/previous.png";
@@ -9,29 +10,13 @@ import "../Styles/FranklinAve.ttf";
 import '../Styles/DareVideo1.css';
 import '../Styles/CommentForm.css';
 
-
-const TopLeftBox = () => (
-  <div className="top-left-box">
-    <p>Contenido de TopLeftBox</p>
-  </div>
-);
-
 const DareVideo1 = () => {
   const [currentReto, setCurrentReto] = useState(0);
   const [likes, setLikes] = useState(0);
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [completedDares, setCompletedDares] = useState([]);
-  const [videoUrl, setVideoUrl] = useState("");  // Añade esta línea
   const videoRef = useRef();
-
-  const handlePlayPause = () => {
-    if (videoRef.current.paused) {
-      videoRef.current.play();
-    } else {
-      videoRef.current.pause();
-    }
-  };
 
   useEffect(() => {
     const unsubscribe = db.collection('completedDares').onSnapshot((snapshot) => {
@@ -40,18 +25,41 @@ const DareVideo1 = () => {
         ...doc.data(),
       }));
       setCompletedDares(completedDaresData);
-      setCurrentReto(0);  // Reinicia currentReto a 0 cada vez que se cargan nuevos retos
+      setCurrentReto(0);
     });
   
     return () => unsubscribe();
   }, []);
-  
+
   useEffect(() => {
-    if (completedDares[currentReto]) {
-      setVideoUrl(completedDares[currentReto].videoUrl);
-    }
-  }, [completedDares, currentReto]);
+    const videoId = completedDares[currentReto]?.id;
   
+    if (videoId) {
+      // Reinicia el estado de los comentarios
+      setComments([]);
+      
+      const unsubscribe = db.collection('comments')
+        .where('videoId', '==', videoId)
+        .orderBy('timestamp', 'desc')
+        .onSnapshot((snapshot) => {
+          const newComments = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          setComments(newComments);
+        });
+  
+      return () => unsubscribe();
+    }
+  }, [completedDares, currentReto]);  
+
+  const handlePlayPause = () => {
+    if (videoRef.current.paused) {
+      videoRef.current.play();
+    } else {
+      videoRef.current.pause();
+    }
+  };
 
   const handleLike = () => {
     setLikes(likes + 1);
@@ -69,27 +77,38 @@ const DareVideo1 = () => {
     }
   };
 
-  const handleCommentSubmit = (e) => {
+  const handleCommentSubmit = async (e) => {
     e.preventDefault();
-    setComments([...comments, comment]);
-    setComment("");
+
+    const userId = auth.currentUser.uid;
+    const videoId = completedDares[currentReto].id;
+
+    const commentData = {
+      userId,
+      videoId,
+      text: comment,
+      timestamp: serverTimestamp(),
+    };
+
+    try {
+      await db.collection('comments').add(commentData);
+      setComments([...comments, commentData]);
+      setComment("");
+    } catch (error) {
+      console.error("Error subiendo el comentario: ", error);
+    }
   };
 
   return (
     <div className="container3">
-      
-    <div className="title-container">
- 
-  <h1 className="title">
-    <span className="titleRetoRed">Reto: </span>
-    <span className="titleReto">{completedDares[currentReto]?.title}</span>
-  </h1>
-
-</div>
+      <div className="title-container">
+        <h1 className="title">
+          <span className="titleRetoRed">Reto: </span>
+          <span className="titleReto">{completedDares[currentReto]?.title}</span>
+        </h1>
+      </div>
       <div className="frame">
         <div className="columna columna1">
-          {/* <TopLeftBox /> */}
-
           <img src={previous}
             alt="Button"
             onClick={handlePreviousReto} className="arrow arrow-left" style={{ position: "absolute", left: 0, top: "50%", transform: "translateY(-50%)" }} />
@@ -99,58 +118,48 @@ const DareVideo1 = () => {
             onClick={handleNextReto}
             className="arrow arrow-right"
           />
-          {videoUrl ? (
+          {completedDares[currentReto]?.videoUrl ? (
             <div className="video-wrapper">
-              <video className="video-blur" controls>
-                <source src={videoUrl} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-
-              <div className="video-focused">
-              <video className="video" ref={videoRef} autoPlay key={completedDares[currentReto]?.videoUrl}>
+              <video className="video" ref={videoRef} autoPlay>
                 <source src={completedDares[currentReto]?.videoUrl} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
               
-                <button className="play-pause-button" onClick={handlePlayPause}>
-                  {videoRef.current && videoRef.current.paused ? "Play" : "Pause"}
-                </button>
-              </div>
+              <button className="play-pause-button" onClick={handlePlayPause}>
+                {videoRef.current && videoRef.current.paused ? "Play" : "Pause"}
+              </button>
             </div>
           ) : (
             "Loading..."
           )}
         </div>
         <div className="columna columna2">
-         
-
           <div className="comment-section">
-    <div className="comments-container">
-      {comments.map((comment, index) => (
-        <p className="comment" key={index}>
-          {comment}
-        </p>
-      ))}
-    </div>
-    <form onSubmit={handleCommentSubmit}>
-      <div >
-        <input
-          type="text"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          placeholder="Deja un comentario"
-          className="flex-1 mr-2 rounded-input"
-        />
-        <button
-          className="button"
-          type="submit"
-        >
-          Enviar
-        </button>
-      </div>
-    </form>
-  </div>
-
+            <div className="comments-container">
+              {comments.map((comment, index) => (
+                <p className="comment" key={index}>
+                  {comment.text}
+                </p>
+              ))}
+            </div>
+            <form onSubmit={handleCommentSubmit}>
+              <div>
+                <input
+                  type="text"
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  placeholder="Deja un comentario"
+                  className="flex-1 mr-2 rounded-input"
+                />
+                <button
+                  className="button"
+                  type="submit"
+                >
+                  Enviar
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
