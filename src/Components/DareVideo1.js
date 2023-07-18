@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import db, { storage, auth } from '../firebase_setup/firebase'; 
-import { getFirestore, collection, onSnapshot, addDoc, serverTimestamp } from "firebase/firestore"; 
+import db, { storage, auth } from '../firebase_setup/firebase'; // Añade auth aquí
+import firebase from 'firebase/app';  // Importa firebase para usar FieldValue
 import "../Styles/HomePage1.css";
 import next from "../Multimedia/next.png";
 import previous from "../Multimedia/previous.png";
@@ -9,7 +9,12 @@ import comments1 from "../Multimedia/comments.png"
 import "../Styles/FranklinAve.ttf";
 import '../Styles/DareVideo1.css';
 import '../Styles/CommentForm.css';
-import send from '../Multimedia/SEND.png';
+
+const TopLeftBox = () => (
+  <div className="top-left-box">
+    <p>Contenido de TopLeftBox</p>
+  </div>
+);
 
 const DareVideo1 = () => {
   const [currentReto, setCurrentReto] = useState(0);
@@ -17,42 +22,8 @@ const DareVideo1 = () => {
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [completedDares, setCompletedDares] = useState([]);
+  const [videoUrl, setVideoUrl] = useState("");  
   const videoRef = useRef();
-
-  useEffect(() => {
-    const unsubscribe = db.collection('completedDares').onSnapshot((snapshot) => {
-      const completedDaresData = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setCompletedDares(completedDaresData);
-      setCurrentReto(0);
-    });
-  
-    return () => unsubscribe();
-  }, []);
-
-  useEffect(() => {
-    const videoId = completedDares[currentReto]?.id;
-  
-    if (videoId) {
-      // Reinicia el estado de los comentarios
-      setComments([]);
-      
-      const unsubscribe = db.collection('comments')
-        .where('videoId', '==', videoId)
-        .orderBy('timestamp', 'desc')
-        .onSnapshot((snapshot) => {
-          const newComments = snapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
-          setComments(newComments);
-        });
-  
-      return () => unsubscribe();
-    }
-  }, [completedDares, currentReto]);  
 
   const handlePlayPause = () => {
     if (videoRef.current.paused) {
@@ -61,6 +32,45 @@ const DareVideo1 = () => {
       videoRef.current.pause();
     }
   };
+
+  useEffect(() => {
+    const unsubscribe = db.collection('completedDares').onSnapshot((snapshot) => {
+      const completedDaresData = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setCompletedDares(completedDaresData);
+      setCurrentReto(0); 
+    });
+  
+    return () => unsubscribe();
+  }, []);
+  
+  useEffect(() => {
+    if (completedDares[currentReto]) {
+      setVideoUrl(completedDares[currentReto].videoUrl);
+    }
+  }, [completedDares, currentReto]);
+
+  useEffect(() => {
+    const videoId = completedDares[currentReto]?.id;
+
+    if (videoId) {
+      const unsubscribe = db.collection('comments')
+        .where('videoId', '==', videoId)
+        .orderBy('timestamp', 'desc')  
+        .onSnapshot((snapshot) => {
+          const newComments = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          setComments(newComments);
+        });
+
+      return () => unsubscribe();
+    }
+  }, [completedDares, currentReto]);
+  
 
   const handleLike = () => {
     setLikes(likes + 1);
@@ -88,12 +98,12 @@ const DareVideo1 = () => {
       userId,
       videoId,
       text: comment,
-      timestamp: serverTimestamp(),
+      timestamp: db.firestore.FieldValue.serverTimestamp(),  
     };
 
     try {
       await db.collection('comments').add(commentData);
-      setComments([...comments, commentData]);
+      setComments([...comments, commentData]); 
       setComment("");
     } catch (error) {
       console.error("Error subiendo el comentario: ", error);
@@ -107,9 +117,6 @@ const DareVideo1 = () => {
           <span className="titleRetoRed">Reto: </span>
           <span className="titleReto">{completedDares[currentReto]?.title}</span>
         </h1>
-        <h2 className="price">
-        Precio: {completedDares[currentReto]?.price}
-      </h2>
       </div>
       <div className="frame">
         <div className="columna columna1">
@@ -122,16 +129,23 @@ const DareVideo1 = () => {
             onClick={handleNextReto}
             className="arrow arrow-right"
           />
-          {completedDares[currentReto]?.videoUrl ? (
+          {videoUrl ? (
             <div className="video-wrapper">
-              <video className="video" ref={videoRef} autoPlay>
+              <video className="video-blur" controls>
+                <source src={videoUrl} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+
+              <div className="video-focused">
+              <video className="video" ref={videoRef} autoPlay key={completedDares[currentReto]?.videoUrl}>
                 <source src={completedDares[currentReto]?.videoUrl} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
               
-              <button className="play-pause-button" onClick={handlePlayPause}>
-                {videoRef.current && videoRef.current.paused ? "Play" : "Pause"}
-              </button>
+                <button className="play-pause-button" onClick={handlePlayPause}>
+                  {videoRef.current && videoRef.current.paused ? "Play" : "Pause"}
+                </button>
+              </div>
             </div>
           ) : (
             "Loading..."
@@ -141,9 +155,10 @@ const DareVideo1 = () => {
           <div className="comment-section">
             <div className="comments-container">
               {comments.map((comment, index) => (
-                <p className="comment" key={index}>
-                  {comment.text}
-                </p>
+                <div className="comment" key={index}>
+                  <p>{comment.text}</p>
+                  <p>Hecho por: {comment.userId}</p>
+                </div>
               ))}
             </div>
             <form onSubmit={handleCommentSubmit}>
