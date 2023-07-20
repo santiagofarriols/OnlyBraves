@@ -33,7 +33,7 @@ function PopupDesafia({ isOpen, closeModal }) {
 
   const addDare = async (dare) => {
     try {
-      await db.collection('dares').add(dare);
+      await db.collection('proposedDares').add(dare);
       console.log("Document successfully written!");
     } catch (error) {
       console.error("Error writing document: ", error);
@@ -90,7 +90,7 @@ function PopupDesafia({ isOpen, closeModal }) {
       setNumber("");
     }
   }, [isOpen]);
-  
+
   return (
     <Modal
       isOpen={isOpen}

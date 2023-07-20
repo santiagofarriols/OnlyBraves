@@ -41,3 +41,63 @@
     background-color: #0056b3;
   }
   
+  /* AdminRequests.css */
+
+.requests-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 20px;
+}
+
+.proposed-dares-card,
+.pending-dares-card {
+  flex: 1;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #f6f6f6;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+}
+
+.dare-card {
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dare-card h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.dare-card p {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #666;
+}
+
+.dare-card a {
+  color: #1a0dab;
+  text-decoration: none;
+}
+
+.dare-card button {
+  margin-right: 10px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  background-color: #1a0dab;
+  color: #ffffff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dare-card button:hover {
+  background-color: #0f0866;
+}
