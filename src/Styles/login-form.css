@@ -95,3 +95,18 @@ input {
   color:  rgb(114, 114, 114);
   margin-top: 10px;
 }
+
+.loginpopup {
+  background-color: #EA3C53;;
+  color: #ffffff;
+  font-weight: bold;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-radius: 0.25rem;
+}
+
+.loginpopup:hover {
+  background-color:#992532;;
+}

@@ -5,6 +5,7 @@ import "firebase/compat/auth";
 import "../Styles/login-form.css";
 import logob from "../Multimedia/LogoBlack.png";   
 
+
 Modal.setAppElement('#root');
 
 const customStyles = {
@@ -103,7 +104,7 @@ function Popuplogin({ toggleRegister, isOpen, closeModal}) {
     }
     handleSubmit(e);
   }}
-  className="bg-yellow-400 hover:bg-yellow-700 text-Black font-bold py-2 px-4 rounded"
+  className="loginpopup"
   type="submit"
   disabled={isLoading}
 >

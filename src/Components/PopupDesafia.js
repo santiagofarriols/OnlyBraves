@@ -109,7 +109,7 @@ function PopupDesafia({ isOpen, closeModal }) {
         <h1 className="titulo">Nuevo reto</h1>
         <form className="form-group " onSubmit={handleSubmit}>
           <input
-            maxLength={50}
+            maxLength={30}
             className="form-input mt-2 rounded-lg bg-white focus:outline-none focus:shadow-outline border-2 border-gray-400 py-2 px-4 block w-full appearance-none p-2 mb-4"
             type="text"
             placeholder="Titulo del reto"
@@ -119,7 +119,7 @@ function PopupDesafia({ isOpen, closeModal }) {
             onChange={(e) => setTitle(e.target.value)}
           />
           <input
-            maxLength={200}
+            maxLength={160}
             className="form-input mt-2 rounded-lg bg-white focus:outline-none focus:shadow-outline border-2 border-gray-400 py-2 px-4 block w-full appearance-none p-2 mb-4"
             type="text"
             placeholder="Descripción del reto "
@@ -129,14 +129,19 @@ function PopupDesafia({ isOpen, closeModal }) {
             onChange={(e) => setDescription(e.target.value)}
           />
           <input
-            maxLength={4}
+            maxLength={3}
             className="form-input mt-2 rounded-lg bg-white focus:outline-none focus:shadow-outline border-2 border-gray-400 py-2 px-4 block w-full appearance-none p-2 mb-4"
             type="number"
             placeholder="Precio"
             value={price}
             onFocus={(e) => e.target.classList.add("border-yellow-400")}
             onBlur={(e) => e.target.classList.remove("border-yellow-400")}
-            onChange={(e) => setNumber(e.target.value)}
+            onChange={(e) => {
+              const inputValue = e.target.value;
+              if (inputValue.length <= 4) {
+                setNumber(inputValue);
+              }
+            }}
           />
           <button
             className={`mt-4 font-medium py-2 px-4 rounded-full ${

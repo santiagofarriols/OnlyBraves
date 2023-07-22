@@ -28,14 +28,17 @@
 
 .columna1 {
   flex: 0.7;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(128, 128, 128, 0.5); /* Gris semitransparente */
-    backdrop-filter: blur(10px); /* Efecto borroso */
-    overflow: hidden; /* Oculta cualquier contenido que sobresalga del contenedor */
-    
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(128, 128, 128, 0.5); /* Gris semitransparente */
+  backdrop-filter: blur(10px); /* Efecto borroso */
+  overflow: hidden; /* Oculta cualquier contenido que sobresalga del contenedor */
+  position: relative; /* Asegura que el fondo se expanda correctamente */
+  background-color: black;
+
+  backdrop-filter: blur(300px);
+}
 
 .arrow-left {
     position: absolute;

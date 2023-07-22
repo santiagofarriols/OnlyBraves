@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import db, { storage, auth, firebase } from '../firebase_setup/firebase';
 import "../Styles/HomePage1.css";
-import next from "../Multimedia/next.png";
-import previous from "../Multimedia/previous.png";
+import sig from "../Multimedia/Sig.png";
+import previous from "../Multimedia/antes.png";
 import like from "../Multimedia/like.png";
 import comments1 from "../Multimedia/comments.png"
 import "../Styles/FranklinAve.ttf";
@@ -181,17 +181,14 @@ const DareVideo1 = () => {
             alt="Button"
             onClick={handlePreviousReto} className="arrow arrow-left" style={{ position: "absolute", left: 0, top: "50%", transform: "translateY(-50%)" }} />
           <img
-            src={next}
+            src={sig}
             alt="Button"
             onClick={handleNextReto}
             className="arrow arrow-right"
           />
           {videoUrl ? (
             <div className="video-wrapper">
-              <video className="video-blur" controls>
-                <source src={videoUrl} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+       
 
               <div className="video-focused">
               <video className="video" ref={videoRef} autoPlay key={completedDares[currentReto]?.videoUrl}>
