@@ -6,6 +6,7 @@ import logo from '../Multimedia/logo.png';
 import Popuplogin from './Popuplogin';
 import PopupRegister from './PopupRegister';
 import PopupDesafia from './PopupDesafia';
+import PopupBuyCoins from './PopupBuyCoins';
 import { useContext } from 'react';
 import { AuthContext } from './AuthContext';
 import firebase from "firebase/compat/app";
@@ -22,6 +23,7 @@ function Navbar({ toggleHome, toggleDare }) {
   const [RegisterOpen, setRegisterOpen] = useState(false);
   const [DesafiaOpen, setDesafiaOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [BuyCoinsOpen, setBuyCoinsOpen] = useState(false);
 
   useEffect(() => {
     if (currentUser) {
@@ -67,6 +69,14 @@ function Navbar({ toggleHome, toggleDare }) {
     });
   };
 
+  const OpenBuyCoins = () => {
+    setBuyCoinsOpen(true);
+  };
+  
+  const CloseBuyCoins = () => {
+    setBuyCoinsOpen(false);
+  };
+
   return (
     <header>
       <nav ref={navRef}>
@@ -98,6 +108,10 @@ function Navbar({ toggleHome, toggleDare }) {
               <Link to="/perfil">
                 Perfil
               </Link>
+              <a class="button" onClick={OpenBuyCoins}>
+                Comprar Brave Coins
+              </a>
+              <PopupBuyCoins isOpen={BuyCoinsOpen} closeModal={CloseBuyCoins} />
             </div>
           ) : (
             <div>

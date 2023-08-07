@@ -3,6 +3,8 @@ import Modal from "react-modal";
 import logob from "../Multimedia/LogoBlack.png";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
+import 'firebase/compat/database';
+import axios from 'axios';
 
 Modal.setAppElement('#root');
 
@@ -42,7 +44,7 @@ function PopupRegister({isOpen, closeModal}) {
     .createUserWithEmailAndPassword(email, password)
     .then(user => {
       // Agrega el campo de rol en la base de datos de usuarios
-      firebase.database().ref('users/' + user.user.uid).set({
+      firebase.database().ref('users').child(user.user.uid).set({
         username: username,
         email: email,
         role: 'user' // Por defecto, todos los usuarios tienen el rol de 'user'
@@ -50,9 +52,25 @@ function PopupRegister({isOpen, closeModal}) {
       user.user
         .sendEmailVerification()
         .then(() => {
-          setIsLoading(false);
-          setError("Registro exitoso. Por favor verifica tu correo electrónico.");
-          CloseAndClean();
+          // Creación de cuenta de usuario en Escrow tras la verificación de correo electrónico
+          axios.post('https://api.escrow-sandbox.com/2017-09-01/customer', {
+            email: email,
+            name: username
+          }, {
+            headers: {
+              'Authorization': 'Bearer Your Escrow API Key',
+              'Content-Type': 'application/json'
+            }
+          }).then(res => {
+            console.log('Escrow user account created successfully', res);
+            setIsLoading(false);
+            setError("Registro exitoso. Por favor verifica tu correo electrónico.");
+            CloseAndClean();
+          }).catch(err => {
+            console.error('Error creating Escrow user account', err);
+            setIsLoading(false);
+            setError("Error creando la cuenta de usuario de Escrow: " + err.message);
+          })
         })
         .catch((error) => {
           setError("Error al enviar correo electrónico de verificación: " + error.message);
@@ -62,7 +80,7 @@ function PopupRegister({isOpen, closeModal}) {
       setIsLoading(false);
       setError("Error en el registro: " + error.message);
     });
-  }  
+  }
 
 
 
@@ -157,6 +175,3 @@ function PopupRegister({isOpen, closeModal}) {
   );
 }
 export default PopupRegister;
-
-
-

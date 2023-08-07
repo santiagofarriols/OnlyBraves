@@ -4,7 +4,6 @@ import db from "../firebase_setup/firebase";
 import Modal from "react-modal";
 import logob from "../Multimedia/LogoBlack.png";
 import { AuthContext } from '../Components/AuthContext';
-
 Modal.setAppElement('#root');
 
 const customStyles = {
